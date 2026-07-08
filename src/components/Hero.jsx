@@ -7,7 +7,7 @@ export default function Hero() {
 
       <nav className="nav">
         <a className="nav__side" href="#about">About</a>
-        <a className="nav__side" href="#research">Research</a>
+        <a className="nav__side" href="#books">Books</a>
         <a className="nav__brand" href="#top">David Kasneci</a>
         <a className="nav__side" href="#teaching">Teaching</a>
         <a className="nav__side" href="#contact">Contact</a>

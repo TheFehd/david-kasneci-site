@@ -1,5 +1,6 @@
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
+import Books369 from './components/Books369.jsx';
 import Proof from './components/Proof.jsx';
 import { useMotion } from './hooks/useMotion.js';
 
@@ -9,6 +10,7 @@ export default function App() {
     <>
       <Hero />
       <About />
+      <Books369 />
       <Proof />
 
       {/* single reusable star glyph for the testimonial ratings */}
