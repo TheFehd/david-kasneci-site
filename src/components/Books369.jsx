@@ -190,7 +190,7 @@ export default function Books369() {
         </div>
       </div>
 
-      <p className="b369__hint reveal reveal--d3">Move your cursor — hover a book to pull it from the shelf. Click to open it in the store.</p>
+      <p className="b369__hint reveal reveal--d3">Pull a book from the shelf &mdash; each one opens in the store.</p>
 
       <div className="b369__ctaRow reveal reveal--d3">
         <a
