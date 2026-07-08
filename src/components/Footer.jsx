@@ -3,6 +3,7 @@ const LINKS = [
   ['The Practice', '#practice'],
   ['The Books', '#books'],
   ['Reviews', '#reviews'],
+  ['1-1 Mentorship', '#mentorship'],
   ['The Initiation', 'https://project369.com/initiationoffer-page'],
   ['Store', 'https://369project.com'],
   ['Blog', 'https://369project.com/blogs/manifestation-tips'],

@@ -1,8 +1,9 @@
 import Hero from './components/Hero.jsx';
-import ProjectsMarquee from './components/ProjectsMarquee.jsx';
+import ProjectsWall from './components/ProjectsWall.jsx';
 import About from './components/About.jsx';
 import Practice369 from './components/Practice369.jsx';
 import Books369 from './components/Books369.jsx';
+import Pillars from './components/Pillars.jsx';
 import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
 import StickyBar from './components/StickyBar.jsx';
@@ -14,10 +15,11 @@ export default function App() {
   return (
     <>
       <Hero />
-      <ProjectsMarquee />
+      <ProjectsWall />
       <About />
       <Practice369 />
       <Books369 />
+      <Pillars />
       <Initiation />
       <Proof />
       <Footer />
