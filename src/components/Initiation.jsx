@@ -1,6 +1,8 @@
 /* The high-ticket doorway — full-bleed cinematic panel for the Initiation
    program and the 1-1 mentorship on project369.com. */
 
+import SplitWords from './SplitWords.jsx';
+
 export default function Initiation() {
   return (
     <section className="init" id="initiation">
@@ -8,7 +10,9 @@ export default function Initiation() {
       <div className="init__overlay" aria-hidden="true" />
       <div className="init__inner">
         <span className="init__label reveal">After the 33 days</span>
-        <h2 className="init__title reveal reveal--d1">The Initiation</h2>
+        <h2 className="init__title reveal reveal-w reveal--d1">
+          <SplitWords text="The Initiation" delay={0.15} step={0.12} />
+        </h2>
         <p className="init__body reveal reveal--d2">
           The books hand you the practice. The Initiation is for the people who finish it
           and want to go deeper &mdash; guided work with David on the layer underneath the

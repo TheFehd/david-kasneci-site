@@ -1,3 +1,5 @@
+import CountUp from './CountUp.jsx';
+
 export default function About() {
   return (
     <section className="about" id="about">
@@ -17,7 +19,7 @@ export default function About() {
           <h2 className="about__lead reveal reveal--d1">
             Eight published works.<br />
             One publishing house.<br />
-            <span>3,997 readers wrote back.</span>
+            <span><CountUp value={3997} duration={2.2} /> readers wrote back.</span>
           </h2>
 
           <div className="about__body reveal reveal--d2">

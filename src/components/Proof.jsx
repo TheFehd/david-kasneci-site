@@ -1,4 +1,5 @@
 import ShinyText from './ShinyText.jsx';
+import CountUp from './CountUp.jsx';
 
 /* Verified reviews — every entry below is a real verified purchase scraped from
    the Project 369 store (Loox widget on 369project.com). Photos are the
@@ -149,16 +150,18 @@ export default function Proof() {
         {/* rating summary — the store's real breakdown */}
         <div className="rsum reveal">
           <div className="rsum__score">
-            <span className="rsum__avg">{STATS.avg}</span>
+            <CountUp className="rsum__avg" value={4.9} decimals={1} duration={1.6} />
             <Stars />
-            <span className="rsum__count">{STATS.total} verified reviews</span>
+            <span className="rsum__count">
+              <CountUp value={3997} duration={2} /> verified reviews
+            </span>
           </div>
           <div className="rsum__bars" role="img" aria-label="Rating breakdown: 3,689 five star, 257 four star, 43 three star, 8 two star, 0 one star reviews">
             {STATS.breakdown.map(([star, n]) => (
               <div className="rsum__row" key={star}>
                 <span className="rsum__star">{star}&#9733;</span>
                 <span className="rsum__bar"><i style={{ width: `${Math.max((n / STATS.fiveStar) * 100, n ? 1.5 : 0)}%` }} /></span>
-                <span className="rsum__n">{n.toLocaleString()}</span>
+                <span className="rsum__n"><CountUp value={n} duration={1.6} /></span>
               </div>
             ))}
           </div>

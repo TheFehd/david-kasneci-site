@@ -1,6 +1,5 @@
 const LINKS = [
   ['About', '#about'],
-  ['The Practice', '#practice'],
   ['The Books', '#books'],
   ['Reviews', '#reviews'],
   ['1-1 Mentorship', '#mentorship'],

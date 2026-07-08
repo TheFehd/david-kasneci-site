@@ -1,8 +1,9 @@
 import Hero from './components/Hero.jsx';
 import ProjectsWall from './components/ProjectsWall.jsx';
 import About from './components/About.jsx';
-import Practice369 from './components/Practice369.jsx';
 import Books369 from './components/Books369.jsx';
+import FinalCall from './components/FinalCall.jsx';
+import Starfield from './components/Starfield.jsx';
 import Pillars from './components/Pillars.jsx';
 import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
@@ -14,14 +15,15 @@ export default function App() {
   useMotion();
   return (
     <>
+      <Starfield />
       <Hero />
       <ProjectsWall />
       <Books369 />
       <About />
-      <Practice369 />
       <Pillars />
       <Initiation />
       <Proof />
+      <FinalCall />
       <Footer />
       <StickyBar />
 
