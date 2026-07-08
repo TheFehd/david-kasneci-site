@@ -35,7 +35,7 @@ export default function StickyBar() {
         <span className="buybar__name">The Manifestation Bundle</span>
         <span className="buybar__sub">All three keys &middot; from $33.33 &middot; free US shipping over $50</span>
       </div>
-      <a className="buybar__btn" href={BUNDLE_URL} target="_blank" rel="noreferrer">Get the bundle</a>
+      <a className="buybar__btn" href={BUNDLE_URL} target="_blank" rel="noreferrer">Bundle</a>
       <button
         className="buybar__close"
         aria-label="Dismiss"

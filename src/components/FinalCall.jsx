@@ -1,4 +1,5 @@
 import SplitWords from './SplitWords.jsx';
+import Btn from './Btn.jsx';
 
 /* Closing call — 21st.dev AnimatedMarqueeHero pattern, rebuilt for this site:
    centered pitch over an infinite film-strip of David's real photos, covers
@@ -33,14 +34,11 @@ export default function FinalCall() {
           He takes a handful of people at a time, and every one of them starts the same way:
           a written application and an honest conversation.
         </p>
-        <a
-          className="fcall__btn reveal reveal--d3"
-          href="https://project369.com/1-1-coaching"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Apply for 1&ndash;1 mentorship
-        </a>
+        <div className="fcall__cta reveal reveal--d3">
+          <Btn solid href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
+            Start your application
+          </Btn>
+        </div>
       </div>
 
       <div className="fcall__marquee" aria-hidden="true">

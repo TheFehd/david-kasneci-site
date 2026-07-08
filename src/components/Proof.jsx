@@ -1,5 +1,6 @@
 import ShinyText from './ShinyText.jsx';
 import CountUp from './CountUp.jsx';
+import Btn from './Btn.jsx';
 
 /* Verified reviews — every entry below is a real verified purchase scraped from
    the Project 369 store (Loox widget on 369project.com). Photos are the
@@ -230,9 +231,9 @@ export default function Proof() {
         </div>
 
         <div className="proof__cta reveal">
-          <a className="proof__btn" href="https://369project.com/collections/project-369-books" target="_blank" rel="noreferrer">
+          <Btn href="https://369project.com/collections/project-369-books" target="_blank" rel="noreferrer">
             <ShinyText text="Read all 3,997 reviews" />
-          </a>
+          </Btn>
           <p className="proof__note">Reviews collected and verified by Loox on 369project.com &mdash; shown as posted.</p>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import Btn from './Btn.jsx';
 
 /* triquetra glyph — the "O" of the PROJECT 369 wordmark */
 function Triquetra({ ring = false, className = '' }) {
@@ -193,14 +194,13 @@ export default function Books369() {
       <p className="b369__hint reveal reveal--d3">Pull a book from the shelf &mdash; each one opens in the store.</p>
 
       <div className="b369__ctaRow reveal reveal--d3">
-        <a
-          className="b369__cta"
+        <Btn
           href="https://369project.com/products/the-ultimate-manifestation-bundle"
           target="_blank"
           rel="noreferrer"
         >
-          Get the complete bundle &mdash; from $33.33
-        </a>
+          Start the 33 days &mdash; from $33.33
+        </Btn>
         <span className="b369__ctaNote">Free US shipping over $50</span>
       </div>
     </section>

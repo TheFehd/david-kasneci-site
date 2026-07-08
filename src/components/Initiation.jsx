@@ -2,6 +2,7 @@
    program and the 1-1 mentorship on project369.com. */
 
 import SplitWords from './SplitWords.jsx';
+import Btn from './Btn.jsx';
 
 export default function Initiation() {
   return (
@@ -19,9 +20,9 @@ export default function Initiation() {
           writing: frequency, source, truth.
         </p>
         <div className="init__ctas reveal reveal--d3">
-          <a className="init__btn" href="https://project369.com/initiationoffer-page" target="_blank" rel="noreferrer">
+          <Btn solid href="https://project369.com/initiationoffer-page" target="_blank" rel="noreferrer">
             Request your invitation
-          </a>
+          </Btn>
           <a className="init__alt" href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
             Or apply for 1&ndash;1 mentorship &rarr;
           </a>

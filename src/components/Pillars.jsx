@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import Btn from './Btn.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -139,9 +140,9 @@ export default function Pillars() {
       <div className="pillars__pin">
         <div className="pillars__chrome">
           <span className="pillars__label">Work 1&ndash;1</span>
-          <a className="pillars__apply" href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
-            Apply &rarr;
-          </a>
+          <Btn sm href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
+            Apply for 1&ndash;1
+          </Btn>
         </div>
 
         <div className="pv">
