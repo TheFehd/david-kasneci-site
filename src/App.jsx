@@ -1,8 +1,12 @@
 import Hero from './components/Hero.jsx';
 import ProjectsMarquee from './components/ProjectsMarquee.jsx';
 import About from './components/About.jsx';
+import Practice369 from './components/Practice369.jsx';
 import Books369 from './components/Books369.jsx';
+import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
+import StickyBar from './components/StickyBar.jsx';
+import Footer from './components/Footer.jsx';
 import { useMotion } from './hooks/useMotion.js';
 
 export default function App() {
@@ -12,8 +16,12 @@ export default function App() {
       <Hero />
       <ProjectsMarquee />
       <About />
+      <Practice369 />
       <Books369 />
+      <Initiation />
       <Proof />
+      <Footer />
+      <StickyBar />
 
       {/* single reusable star glyph for the testimonial ratings */}
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">

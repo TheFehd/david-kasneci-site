@@ -26,6 +26,7 @@ function Mark() {
 const BOOKS = [
   {
     key: 'planner',
+    url: 'https://369project.com/products/project-369-manifestation-planner',
     minor: true,
     coil: true,
     art: '/assets/369/planner.jpg',
@@ -36,6 +37,7 @@ const BOOKS = [
   },
   {
     key: 'universe',
+    url: 'https://369project.com/products/369-manifestation-journal',
     art: '/assets/369/universe.jpg',
     spine: 'The Key to the Universe',
     title: 'The Key to the Universe',
@@ -44,6 +46,7 @@ const BOOKS = [
   },
   {
     key: 'bliss',
+    url: 'https://369project.com/products/project-369-the-key-to-happiness-gratitude-consciousness',
     art: '/assets/369/bliss.jpg',
     spine: 'The Key to Enlightenment',
     title: 'The Key to Enlightenment',
@@ -52,6 +55,7 @@ const BOOKS = [
   },
   {
     key: 'wealth',
+    url: 'https://369project.com/products/project-369-the-key-to-wealth-abundance-prosperity',
     art: '/assets/369/wealth.jpg',
     spine: 'The Key to Abundance',
     title: 'The Key to Abundance',
@@ -60,6 +64,7 @@ const BOOKS = [
   },
   {
     key: 'iam',
+    url: 'https://369project.com/products/project-369-the-key-to-wholeness-soul-work-journal',
     minor: true,
     coil: true,
     iam: true,
@@ -144,11 +149,13 @@ export default function Books369() {
         <div className="b369__scale" ref={scaleRef}>
           <div className="b369__scene" ref={sceneRef}>
             {BOOKS.map((b, i) => (
-              <div
+              <a
                 key={b.key}
                 className={`b369__slot${b.minor ? ' b369__slot--minor' : ''}`}
-                tabIndex={0}
-                aria-label={b.label}
+                href={b.url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${b.label} — view in the store`}
                 style={{
                   '--ry': POSE[i],
                   '--bw': b.minor ? '176px' : '212px',
@@ -177,13 +184,25 @@ export default function Books369() {
                     <span className="b369__gloss" aria-hidden="true" />
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
       </div>
 
-      <p className="b369__hint reveal reveal--d3">Move your cursor — hover a book to pull it from the shelf.</p>
+      <p className="b369__hint reveal reveal--d3">Move your cursor — hover a book to pull it from the shelf. Click to open it in the store.</p>
+
+      <div className="b369__ctaRow reveal reveal--d3">
+        <a
+          className="b369__cta"
+          href="https://369project.com/products/the-ultimate-manifestation-bundle"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Get the complete bundle &mdash; from $33.33
+        </a>
+        <span className="b369__ctaNote">Free US shipping over $50</span>
+      </div>
     </section>
   );
 }
