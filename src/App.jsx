@@ -1,4 +1,5 @@
 import Hero from './components/Hero.jsx';
+import ProjectsMarquee from './components/ProjectsMarquee.jsx';
 import About from './components/About.jsx';
 import Books369 from './components/Books369.jsx';
 import Proof from './components/Proof.jsx';
@@ -9,6 +10,7 @@ export default function App() {
   return (
     <>
       <Hero />
+      <ProjectsMarquee />
       <About />
       <Books369 />
       <Proof />

@@ -9,8 +9,8 @@ export default function Hero() {
         <a className="nav__side" href="#about">About</a>
         <a className="nav__side" href="#books">Books</a>
         <a className="nav__brand" href="#top">David Kasneci</a>
-        <a className="nav__side" href="#teaching">Teaching</a>
-        <a className="nav__side" href="#contact">Contact</a>
+        <a className="nav__side" href="#reviews">Reviews</a>
+        <a className="nav__side" href="https://369project.com/pages/contact">Contact</a>
       </nav>
 
       <div className="hero__titleWrap">
