@@ -16,9 +16,9 @@ export default function App() {
     <>
       <Hero />
       <ProjectsWall />
+      <Books369 />
       <About />
       <Practice369 />
-      <Books369 />
       <Pillars />
       <Initiation />
       <Proof />

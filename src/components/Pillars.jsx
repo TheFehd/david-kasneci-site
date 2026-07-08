@@ -115,14 +115,14 @@ export default function Pillars() {
     });
 
     tl.addLabel('p0');
-    dots[0] && tl.set(dots[0], { backgroundColor: '#c6a45b' }, 'p0');
+    dots[0] && tl.set(dots[0], { backgroundColor: '#f5f5f5' }, 'p0');
     for (let i = 1; i < n; i++) {
       tl.to(phases[i - 1].querySelector('.pv__text'), { autoAlpha: 0, y: -34, duration: 0.42, ease: 'power2.in' });
       tl.to(phases[i - 1].querySelector('.pv__imgwrap'), { autoAlpha: 0, scale: 1.05, duration: 0.42, ease: 'power2.in' }, '<');
       tl.fromTo(phases[i].querySelector('.pv__imgwrap'), { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
       tl.fromTo(phases[i].querySelector('.pv__text'), { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '<0.06');
       tl.set(phases[i], { zIndex: 2 }, '<');
-      dots[i] && tl.set(dots[i], { backgroundColor: '#c6a45b' }, '<');
+      dots[i] && tl.set(dots[i], { backgroundColor: '#f5f5f5' }, '<');
       tl.to(fill, { height: `${(i / (n - 1)) * 100}%`, duration: 0.5, ease: 'none' }, '<');
       tl.addLabel(`p${i}`);
       tl.to({}, { duration: 0.35 }); // breathing room at each stop
