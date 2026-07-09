@@ -129,7 +129,33 @@ export default function Pillars() {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (staticMode) { section.classList.add('pillars--static'); return; }
+
+    if (staticMode) {
+      /* mobile / reduced motion: chapters still perform — chars rise and
+         content staggers in as each phase scrolls into view */
+      section.classList.add('pillars--static');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const phases = section.querySelectorAll('.pv__phase');
+      phases.forEach((ph) => {
+        const title = ph.querySelector('.pv__title');
+        const chars = splitChars(title);
+        chars.forEach((c, i) => { c.style.transitionDelay = `${0.08 + i * 0.016}s`; });
+        ph.querySelectorAll('.pv__count, .pv__hook, .pv__lead, .pv__points li, .pv__best')
+          .forEach((el, i) => { el.style.transitionDelay = `${0.25 + i * 0.055}s`; });
+      });
+      if (reduce) {
+        phases.forEach((ph) => ph.classList.add('is-in'));
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((en) => {
+          if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        }),
+        { threshold: 0.3 },
+      );
+      phases.forEach((ph) => io.observe(ph));
+      return () => io.disconnect();
+    }
     section.classList.remove('pillars--static');
 
     gsap.registerPlugin(ScrollTrigger);

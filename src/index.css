@@ -1882,7 +1882,6 @@ html, body {
 /* ---------- chapter title char reveal (SplitText) ---------- */
 .pv__word { display: inline-block; overflow: hidden; vertical-align: top; }
 .pv__char { display: inline-block; will-change: transform; }
-.pillars--static .pv__char { transform: none !important; }
 
 /* ---------- GRADUAL BLUR (react-bits) — frosted depth at the fold ---------- */
 .gblur {
@@ -1952,4 +1951,52 @@ html, body {
   /* tighter section rhythm on phones */
   .init { padding-top: clamp(90px, 14vh, 140px); padding-bottom: clamp(90px, 14vh, 140px); }
   .pwall { padding-bottom: 56px; }
+}
+
+/* ---------- static chapters (mobile): text performs on entry ---------- */
+.pillars--static .pv__char {
+  transform: translateY(112%);
+  transition: transform 0.75s var(--ease);
+}
+.pillars--static .pv__phase.is-in .pv__char { transform: none; }
+.pillars--static .pv__count,
+.pillars--static .pv__hook,
+.pillars--static .pv__lead,
+.pillars--static .pv__points li,
+.pillars--static .pv__best {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+}
+.pillars--static .pv__phase.is-in .pv__count,
+.pillars--static .pv__phase.is-in .pv__hook,
+.pillars--static .pv__phase.is-in .pv__lead,
+.pillars--static .pv__phase.is-in .pv__points li,
+.pillars--static .pv__phase.is-in .pv__best {
+  opacity: 1;
+  transform: none;
+}
+/* the photo breathes in too */
+.pillars--static .pv__media img {
+  transform: scale(1.06);
+  transition: transform 1.4s var(--ease);
+}
+.pillars--static .pv__phase.is-in .pv__media img { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pillars--static .pv__char,
+  .pillars--static .pv__count,
+  .pillars--static .pv__hook,
+  .pillars--static .pv__lead,
+  .pillars--static .pv__points li,
+  .pillars--static .pv__best,
+  .pillars--static .pv__media img {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}
+
+/* mobile reveals get a longer rise so motion actually registers */
+@media (max-width: 860px) {
+  .reveal { transform: translateY(26px); transition-duration: 0.9s; }
 }
