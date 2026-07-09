@@ -27,7 +27,10 @@ export default function Hero() {
         <a className="nav__side" href="#about">About</a>
         <a className="nav__side" href="#books">Books</a>
         <a className="nav__side" href="#mentorship">Mentorship</a>
-        <a className="nav__brand" href="#top">David Kasneci</a>
+        <a className="nav__brand" href="#top">
+          <svg className="nav__mark" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="7"><path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z" /><path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z" transform="rotate(120 50 54)" /><path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z" transform="rotate(240 50 54)" /></g></svg>
+          David Kasneci
+        </a>
         <a className="nav__side" href="#reviews">Reviews</a>
         <a className="nav__side" href="https://369project.com/pages/contact">Contact</a>
       </nav>
