@@ -1916,3 +1916,15 @@ html, body {
   .rw:nth-child(n + 8) { display: none; }
   .pullq__quote p { font-size: 17.5px; line-height: 1.55; }
 }
+
+/* ---------- MOBILE FINAL FIT ---------- */
+@media (max-width: 640px) {
+  /* buttons become compact wrapped blocks so the corner brackets hug */
+  .btn { padding: 15px 24px; max-width: min(320px, calc(100vw - 48px)); }
+  .btn__label { white-space: normal; text-align: center; line-height: 1.75; letter-spacing: 0.18em; font-size: 10.5px; }
+  .btn--ghost { max-width: none; }
+  .btn--ghost .btn__label { white-space: nowrap; }
+  /* tighter section rhythm on phones */
+  .init { padding-top: clamp(90px, 14vh, 140px); padding-bottom: clamp(90px, 14vh, 140px); }
+  .pwall { padding-bottom: 56px; }
+}
