@@ -34,7 +34,9 @@ export function useMotion() {
     }
 
     gsap.registerPlugin(ScrollTrigger);
-    const lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+    /* native scroll on touch devices — smoothing there fights the OS physics */
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    const lenis = new Lenis({ duration: 0.85, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     const raf = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);

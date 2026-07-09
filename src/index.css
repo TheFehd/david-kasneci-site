@@ -711,8 +711,7 @@ html, body {
   height: 100%;
 }
 .pv__media img {
-  object-fit: cover;
-  filter: grayscale(1) contrast(1.05) brightness(0.85);
+  object-fit: cover; /* grayscale grade is baked into the JPEGs */
   will-change: transform;
 }
 .pv__scrim {
@@ -1041,10 +1040,9 @@ html, body {
 .reveal {
   opacity: 0;
   transform: translateY(22px);
-  filter: blur(7px);
-  transition: opacity 1.05s var(--ease), transform 1.05s var(--ease), filter 1.05s var(--ease);
+  transition: opacity 1.05s var(--ease), transform 1.05s var(--ease);
 }
-.reveal.is-visible { opacity: 1; transform: none; filter: none; }
+.reveal.is-visible { opacity: 1; transform: none; }
 .reveal--d1 { transition-delay: 0.08s; }
 .reveal--d2 { transition-delay: 0.16s; }
 .reveal--d3 { transition-delay: 0.24s; }
@@ -1832,4 +1830,12 @@ html, body {
   .buybar { max-width: calc(100vw - 20px); }
   .buybar__btn { padding: 13px 20px; }
   .footer { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
+}
+
+/* ---------- PERF: skip rendering far-offscreen heavy sections ---------- */
+.proof,
+.fcall,
+.init {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }

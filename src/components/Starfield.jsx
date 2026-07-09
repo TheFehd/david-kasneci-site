@@ -208,9 +208,9 @@ export default function Starfield() {
     ].forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
 
     const resize = () => {
-      const dpr = 1; /* stars don't need retina; halves the fill cost */
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      const scale = 0.7; /* stars don't need full res; CSS stretches the canvas */
+      canvas.width = Math.round(window.innerWidth * scale);
+      canvas.height = Math.round(window.innerHeight * scale);
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform3f(U.uResolution, canvas.width, canvas.height, canvas.width / canvas.height);
     };
