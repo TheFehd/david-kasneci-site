@@ -68,7 +68,6 @@ export default function App() {
     <>
       <a className="skiplink" href="#books">Skip to content</a>
       <Background />
-      <div className="grain" aria-hidden="true" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mentorship" element={<MentorshipPage />} />

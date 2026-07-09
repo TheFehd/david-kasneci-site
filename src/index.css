@@ -503,7 +503,7 @@ html, body {
   .pw__m--house { letter-spacing: 0.18em; }
 }
 
-/* ---------- BUTTONS (text-roll pill) ---------- */
+/* ---------- BUTTONS (Magic UI animated-shiny-text) ---------- */
 .btn {
   position: relative;
   display: inline-flex;
@@ -511,56 +511,82 @@ html, body {
   justify-content: center;
   padding: 16px 32px;
   text-decoration: none;
-  color: #f4f4f3;
-  background: rgba(240, 240, 240, 0.05);
+  background: rgba(240, 240, 240, 0.04);
   border: 1px solid rgba(240, 240, 240, 0.16);
   border-radius: 100px;
   transition: border-color 0.45s var(--ease), background-color 0.45s var(--ease), transform 0.45s var(--ease);
 }
 .btn:hover {
-  border-color: rgba(240, 240, 240, 0.45);
-  background: rgba(240, 240, 240, 0.09);
+  border-color: rgba(240, 240, 240, 0.42);
+  background: rgba(240, 240, 240, 0.07);
   transform: translateY(-1px);
 }
 .btn:focus-visible { outline: 1px solid rgba(240, 240, 240, 0.65); outline-offset: 4px; }
+/* the label carries a slow shine sweep, always on */
 .btn__label {
-  position: relative;
-  display: block;
-  overflow: hidden;
   font-family: var(--sans);
   font-weight: 500;
   font-size: 11.5px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  line-height: 1.4;
   white-space: nowrap;
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(
+    110deg,
+    rgba(240, 240, 240, 0.55) 35%,
+    #ffffff 48%,
+    #ffffff 52%,
+    rgba(240, 240, 240, 0.55) 65%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: btnShine 4.5s cubic-bezier(0.6, 0.6, 0, 1) infinite;
 }
-.btn__t { display: block; transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1); }
-.btn__t--b { position: absolute; inset: 0; transform: translateY(115%); }
-.btn:hover .btn__t--a { transform: translateY(-115%); }
-.btn:hover .btn__t--b { transform: translateY(0); }
+@keyframes btnShine {
+  0%   { background-position: 120% 0; }
+  60%  { background-position: -120% 0; }
+  100% { background-position: -120% 0; }
+}
+.btn:hover .btn__label { animation-duration: 1.6s; }
 
-.btn--solid { background: var(--accent); border-color: var(--accent); color: var(--black); }
-.btn--solid:hover { background: #ffffff; border-color: #ffffff; }
+/* solid: white plate, plain black label */
+.btn--solid {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn--solid:hover { background: #ffffff; border-color: #ffffff; transform: translateY(-1px); }
+.btn--solid .btn__label {
+  animation: none;
+  background: none;
+  color: var(--black);
+  -webkit-text-fill-color: var(--black);
+}
 
+/* ghost: bare shiny text with a quiet underline */
 .btn--ghost { padding: 8px 0; border: none; background: transparent; border-radius: 0; }
 .btn--ghost:hover { background: transparent; transform: none; }
 .btn--ghost .btn__label {
   letter-spacing: 0.16em;
-  color: rgba(240, 240, 240, 0.62);
   border-bottom: 1px solid rgba(240, 240, 240, 0.22);
   padding-bottom: 7px;
-  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.btn--ghost:hover .btn__label { color: var(--accent); border-bottom-color: rgba(240, 240, 240, 0.55); }
+.btn--ghost:hover .btn__label { border-bottom-color: rgba(240, 240, 240, 0.55); }
 
 .btn--sm { padding: 12px 22px; }
 .btn--sm .btn__label { font-size: 10.5px; letter-spacing: 0.2em; }
 
 @media (prefers-reduced-motion: reduce) {
-  .btn__t { transition: none; }
-  .btn:hover .btn__t--a { transform: none; }
-  .btn__t--b { display: none; }
+  .btn__label {
+    animation: none;
+    background: none;
+    color: var(--title);
+    -webkit-text-fill-color: var(--title);
+  }
+  .btn--solid .btn__label { color: var(--black); -webkit-text-fill-color: var(--black); }
 }
 
 /* ---------- books CTA row ---------- */
@@ -1818,7 +1844,6 @@ html, body {
 @media (max-width: 640px) {
   /* buttons become compact wrapped blocks so the corner brackets hug */
   .btn { padding: 15px 24px; max-width: min(320px, calc(100vw - 48px)); }
-  .btn__label { letter-spacing: 0.16em; font-size: 10px; }
   .btn--ghost { max-width: none; }
   .btn--ghost .btn__label { white-space: nowrap; }
   /* tighter section rhythm on phones */
@@ -2615,17 +2640,6 @@ html, body {
 
 /* ================= SENIOR POLISH PASS ================= */
 
-/* film grain — kills the flat digital look; static, zero per-frame cost */
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
-  background-size: 240px 240px;
-  mix-blend-mode: overlay;
-}
 
 /* selection + scrollbar carry the brand */
 ::selection { background: rgba(240, 240, 240, 0.9); color: #070708; }
@@ -2711,7 +2725,6 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .b369__scene { animation: none; }
   #root { animation: none; }
-  .grain { display: none; }
 }
 
 /* ---------- LOGO (metallic paint in the footer, marks in the chrome) ---------- */
