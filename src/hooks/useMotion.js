@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
  * plus IntersectionObserver-driven reveals (robust — content always resolves visible).
  * Respects prefers-reduced-motion.
  */
-export function useMotion() {
+export function useMotion(dep) {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return; // CSS already reveals everything
@@ -63,5 +63,5 @@ export function useMotion() {
       gsap.ticker.remove(raf);
       lenis.destroy();
     };
-  }, []);
+  }, [dep]);
 }

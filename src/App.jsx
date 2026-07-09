@@ -1,3 +1,5 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import Hero from './components/Hero.jsx';
 import ProjectsWall from './components/ProjectsWall.jsx';
 import About from './components/About.jsx';
@@ -8,15 +10,15 @@ import Pillars from './components/Pillars.jsx';
 import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
 import StickyBar from './components/StickyBar.jsx';
-import GradualBlur from './components/GradualBlur.jsx';
 import Footer from './components/Footer.jsx';
+import GradualBlur from './components/GradualBlur.jsx';
+import MentorshipPage from './components/MentorshipPage.jsx';
+import WealthPage from './components/WealthPage.jsx';
 import { useMotion } from './hooks/useMotion.js';
 
-export default function App() {
-  useMotion();
+function Home() {
   return (
     <>
-      <Starfield />
       <Hero />
       <ProjectsWall />
       <Books369 />
@@ -25,9 +27,27 @@ export default function App() {
       <Initiation />
       <Proof />
       <FinalCall />
+      <StickyBar />
+    </>
+  );
+}
+
+export default function App() {
+  const { pathname } = useLocation();
+  useMotion(pathname);
+
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+
+  return (
+    <>
+      <Starfield />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/mentorship" element={<MentorshipPage />} />
+        <Route path="/wealth" element={<WealthPage />} />
+      </Routes>
       <Footer />
       <GradualBlur />
-      <StickyBar />
 
       {/* single reusable star glyph for the testimonial ratings */}
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">

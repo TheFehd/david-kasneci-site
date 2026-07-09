@@ -1,8 +1,9 @@
 const LINKS = [
-  ['About', '#about'],
-  ['The Books', '#books'],
-  ['Reviews', '#reviews'],
-  ['1-1 Mentorship', '#mentorship'],
+  ['About', '/#about'],
+  ['The Books', '/#books'],
+  ['Reviews', '/#reviews'],
+  ['1-1 Mentorship', '/mentorship'],
+  ['Wealth Consciousness', '/wealth'],
   ['The Initiation', 'https://project369.com/initiationoffer-page'],
   ['Store', 'https://369project.com'],
   ['Blog', 'https://369project.com/blogs/manifestation-tips'],

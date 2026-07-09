@@ -114,7 +114,7 @@ const isStatic = () =>
   window.matchMedia('(max-width: 860px)').matches ||
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-export default function Pillars() {
+export default function Pillars({ applyExternal = false }) {
   const sectionRef = useRef(null);
   const [staticMode, setStaticMode] = useState(isStatic);
 
@@ -226,9 +226,13 @@ export default function Pillars() {
           <span className="pv__progress"><i /></span>
           <span className="pillars__label">Work 1&ndash;1</span>
           <div className="pv__apply">
-            <Btn sm href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
-              Apply for 1&ndash;1
-            </Btn>
+            {applyExternal ? (
+              <Btn sm href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
+                Apply for 1&ndash;1
+              </Btn>
+            ) : (
+              <Btn sm to="/mentorship">Work 1&ndash;1 &rarr;</Btn>
+            )}
           </div>
         </div>
       </div>
