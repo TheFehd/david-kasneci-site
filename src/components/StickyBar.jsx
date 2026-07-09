@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-/* Slim buy bar — slides in once the visitor has seen the books,
-   stays out of the way, dismissible. */
+/* Mini product card, pinned — cover art, live rating proof, anchored price,
+   one solid CTA. Slides in after the visitor has met the books. */
 
 const BUNDLE_URL = 'https://369project.com/products/the-ultimate-manifestation-bundle';
 
@@ -29,13 +29,23 @@ export default function StickyBar() {
   if (dismissed) return null;
 
   return (
-    <div className={`buybar${show ? ' is-in' : ''}`} role="complementary" aria-label="Get the collection">
-      <img className="buybar__icon" src="/assets/369/icons/books.jpg" alt="" />
+    <aside className={`buybar${show ? ' is-in' : ''}`} aria-label="The Complete Manifestation Bundle">
+      <img className="buybar__cover" src="/assets/369/universe.jpg" alt="" aria-hidden="true" />
       <div className="buybar__text">
-        <span className="buybar__name">The Manifestation Bundle</span>
-        <span className="buybar__sub">All three keys &middot; from $33.33 &middot; free US shipping over $50</span>
+        <span className="buybar__name">The Complete Bundle</span>
+        <span className="buybar__proof" aria-label="Rated 4.9 by 3,997 verified readers">
+          <span className="buybar__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          4.9 &middot; 3,997 readers
+        </span>
       </div>
-      <a className="buybar__btn" href={BUNDLE_URL} target="_blank" rel="noreferrer">Bundle</a>
+      <div className="buybar__price" aria-label="From $33.33, regular $88.88">
+        <b>$33.33</b>
+        <s>$88.88</s>
+      </div>
+      <a className="buybar__btn" href={BUNDLE_URL} target="_blank" rel="noreferrer">
+        <span className="buybar__btnLong">Get the bundle</span>
+        <span className="buybar__btnShort">$33.33 &rarr;</span>
+      </a>
       <button
         className="buybar__close"
         aria-label="Dismiss"
@@ -43,6 +53,6 @@ export default function StickyBar() {
       >
         &times;
       </button>
-    </div>
+    </aside>
   );
 }

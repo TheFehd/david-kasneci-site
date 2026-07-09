@@ -938,98 +938,7 @@ html, body {
   color: var(--muted);
 }
 
-/* ---------- STICKY BUY BAR ---------- */
-.buybar {
-  position: fixed;
-  z-index: 60;
-  left: 50%;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-  transform: translate(-50%, calc(100% + 26px));
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  max-width: min(640px, calc(100vw - 28px));
-  width: max-content;
-  padding: 12px 14px 12px 12px;
-  background: rgba(12, 12, 14, 0.96);
-  border: 1px solid rgba(240, 240, 240, 0.18);
-  border-radius: 100px;
-  /* solid — backdrop blur over the WebGL canvas repaints every frame */
-  box-shadow: 0 18px 50px -12px rgba(0, 0, 0, 0.65);
-  transition: transform 0.7s var(--ease);
-}
-.buybar.is-in { transform: translate(-50%, 0); }
-.buybar__icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: contrast(1.25);
-  flex: none;
-}
-.buybar__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.buybar__name {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 15.5px;
-  color: var(--title);
-  white-space: nowrap;
-}
-.buybar__sub {
-  font-family: var(--sans);
-  font-weight: 300;
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.buybar__btn {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--black);
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  text-decoration: none;
-  padding: 11px 16px;
-  border-radius: 4px;
-  transition: background-color 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease);
-}
-.buybar__btn::after {
-  content: "";
-  width: 14px;
-  height: 14px;
-  background: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 17L17 7M17 7H9.5M17 7V14.5' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 17L17 7M17 7H9.5M17 7V14.5' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-.buybar__btn:hover { background: transparent; color: var(--accent); border-color: rgba(240, 240, 240, 0.35); }
-.buybar__close {
-  flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--muted);
-  font-size: 19px;
-  line-height: 1;
-  cursor: pointer;
-  transition: color 0.3s var(--ease);
-}
-.buybar__close:hover { color: var(--title); }
 @media (max-width: 560px) {
-  .buybar { gap: 10px; }
-  .buybar__sub { display: none; }
-  .buybar__icon { display: none; }
 }
 
 /* ---------- scroll reveal ---------- */
@@ -1848,8 +1757,6 @@ html, body {
   .nav { justify-content: flex-start; padding: 24px 22px; }
   .nav__brand { font-size: 13px; }
   /* larger tap targets + calmer spacing on phones */
-  .buybar { max-width: calc(100vw - 20px); }
-  .buybar__btn { padding: 13px 20px; }
   .footer { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
 }
 
@@ -1995,4 +1902,122 @@ html, body {
 /* mobile reveals get a longer rise so motion actually registers */
 @media (max-width: 860px) {
   .reveal { transform: translateY(26px); transition-duration: 0.9s; }
+}
+
+/* ---------- BUY BAR — mini product card ---------- */
+.buybar {
+  position: fixed;
+  z-index: 70;
+  left: 50%;
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, calc(100% + 60px));
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: min(600px, calc(100vw - 24px));
+  width: max-content;
+  padding: 11px 12px 11px 11px;
+  background: linear-gradient(180deg, rgba(22, 22, 24, 0.98), rgba(10, 10, 11, 0.98));
+  border: 1px solid rgba(240, 240, 240, 0.14);
+  border-top-color: rgba(240, 240, 240, 0.22); /* light catches the top edge */
+  border-radius: 18px;
+  box-shadow:
+    0 30px 70px -18px rgba(0, 0, 0, 0.85),
+    0 6px 22px -8px rgba(0, 0, 0, 0.7);
+  transition: transform 0.8s var(--ease);
+}
+.buybar.is-in { transform: translate(-50%, 0); }
+.buybar__cover {
+  width: 46px;
+  height: 64px;
+  flex: none;
+  object-fit: cover;
+  border-radius: 6px 9px 9px 6px; /* book-shaped */
+  box-shadow: 3px 4px 12px -2px rgba(0, 0, 0, 0.7), inset -3px 0 5px -2px rgba(0, 0, 0, 0.6);
+}
+.buybar__text { display: flex; flex-direction: column; gap: 5px; min-width: 0; overflow: hidden; }
+.buybar__name {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 16.5px;
+  letter-spacing: 0.02em;
+  color: #f4f4f3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.buybar__proof {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: rgba(240, 240, 240, 0.6);
+  white-space: nowrap;
+}
+.buybar__stars { font-size: 10px; letter-spacing: 2px; color: #f4f4f3; }
+.buybar__price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin-left: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.buybar__price b {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+}
+.buybar__price s {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 11px;
+  color: rgba(240, 240, 240, 0.38);
+}
+.buybar__btn {
+  flex: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: #f4f4f3;
+  text-decoration: none;
+  padding: 15px 24px;
+  border-radius: 12px;
+  transition: background-color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.buybar__btn:hover { background: #ffffff; transform: translateY(-1px); }
+.buybar__btnShort { display: none; }
+.buybar__close {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: rgba(240, 240, 240, 0.4);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s var(--ease);
+}
+.buybar__close:hover { color: #f4f4f3; }
+@media (max-width: 560px) {
+  .buybar { gap: 12px; padding: 10px 10px 10px 10px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+  .buybar__cover { width: 38px; height: 54px; }
+  .buybar__name { font-size: 14px; }
+  .buybar__proof { font-size: 9px; gap: 4px; }
+  .buybar__stars { font-size: 8px; letter-spacing: 1.5px; }
+  .buybar__price { display: none; } /* the button becomes the price */
+  .buybar__btn { padding: 12px 15px; font-size: 11px; border-radius: 10px; letter-spacing: 0.08em; }
+  .buybar__btnLong { display: none; }
+  .buybar__btnShort { display: inline; }
+  .buybar__close { margin-left: -6px; }
 }
