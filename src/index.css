@@ -2353,3 +2353,110 @@ html, body {
 .offer__isnt li { font-family: var(--sans); font-size: 13.5px; color: var(--body); }
 .offer__isnt > div:last-child li { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(240,240,240,0.25); }
 @media (max-width: 560px) { .offer__isnt { grid-template-columns: 1fr; } }
+
+/* ---------- FERROFLUID BACKGROUND HOST ---------- */
+.bgfx {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.bgfx .ferrofluid-container { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.bgfx canvas { width: 100%; height: 100%; display: block; }
+
+/* ---------- SPLITTEXT / SCROLLREVEAL helpers ---------- */
+.stx { display: inline-block; }
+.stx__w { display: inline-block; white-space: nowrap; }
+.stx__c { display: inline-block; will-change: transform, opacity; }
+.srv { margin: 0; }
+.srv__w { display: inline-block; will-change: opacity, filter; }
+
+/* ---------- WEALTH PAGE — the funnel's emerald, respected ---------- */
+.wpage {
+  --wc: #10b981;
+  --wc-bright: #34d399;
+}
+.wpage .pillars__label { color: var(--wc-bright); }
+.wpage .subhero__note { color: var(--wc-bright); }
+.wpage .phx__num { color: var(--wc-bright); }
+.wpage .phx__card li::before { background: var(--wc); }
+.wpage .phx__card:hover { border-color: rgba(52, 211, 153, 0.35); }
+.wpage .offer__stack li::before { border-color: var(--wc-bright); }
+.wpage .offer__panel { border-top-color: rgba(52, 211, 153, 0.4); }
+.wpage .btn--solid { background: var(--wc); border-color: var(--wc); }
+.wpage .btn--solid .btn__label { color: #04150f; -webkit-text-fill-color: #04150f; }
+.wpage .btn--solid:hover { background: var(--wc-bright); border-color: var(--wc-bright); }
+.wpage .init__label { color: var(--wc-bright); }
+/* animated emerald gradient (react-bits GradientText) on the price */
+.greentext {
+  background: linear-gradient(100deg, #10b981 20%, #a7f3d0 42%, #34d399 55%, #10b981 80%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: greenShift 5s linear infinite;
+}
+@keyframes greenShift {
+  from { background-position: 0% 0; }
+  to   { background-position: 220% 0; }
+}
+
+/* ---------- SCROLL STACK (wealth timeline) ---------- */
+.wstack { max-width: 820px; margin: 0 auto; padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 60px); }
+.wstack__cards { display: flex; flex-direction: column; gap: clamp(36px, 6vh, 64px); padding-bottom: 10vh; }
+.wstack__card {
+  position: sticky;
+  display: grid;
+  grid-template-columns: minmax(90px, 150px) 1fr;
+  gap: clamp(20px, 4vw, 50px);
+  align-items: center;
+  background: linear-gradient(180deg, rgba(24, 24, 26, 0.98), rgba(12, 12, 13, 0.98));
+  border: 1px solid rgba(240, 240, 240, 0.12);
+  border-top-color: rgba(52, 211, 153, 0.3);
+  border-radius: 22px;
+  padding: clamp(28px, 4vw, 48px);
+  min-height: 34vh;
+  will-change: transform, filter;
+  transform-origin: 50% 0%;
+}
+.wstack__n {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(64px, 9vw, 110px);
+  line-height: 0.9;
+  color: var(--wc-bright, #34d399);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.wstack__body h3 {
+  margin: 0 0 16px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240, 240, 240, 0.9);
+}
+.wstack__body ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.wstack__body li {
+  position: relative;
+  padding-left: 22px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--body);
+}
+.wstack__body li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 10px;
+  height: 1px;
+  background: var(--wc, #10b981);
+}
+@media (max-width: 640px) {
+  .wstack__card { grid-template-columns: 1fr; gap: 14px; min-height: 0; padding: 26px 22px; }
+  .wstack__n { text-align: left; font-size: 54px; }
+}

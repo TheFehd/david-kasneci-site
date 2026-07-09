@@ -1,6 +1,8 @@
 import PageHead from './PageHead.jsx';
 import Btn from './Btn.jsx';
 import BlurText from './BlurText.jsx';
+import SplitTextRB from './SplitTextRB.jsx';
+import ScrollRevealRB from './ScrollRevealRB.jsx';
 import Pillars from './Pillars.jsx';
 
 /* /mentorship — the 1-1 coaching funnel, rebuilt in the site's language.
@@ -18,7 +20,7 @@ export default function MentorshipPage() {
         <div className="subhero__inner">
           <span className="subhero__label reveal">Private 1&ndash;1 &middot; by application</span>
           <h1 className="subhero__title">
-            <BlurText text="Work with David, one to one." step={0.07} />
+            <SplitTextRB text="Work with David, one to one." delay={28} />
           </h1>
           <p className="subhero__framework reveal reveal--d1">
             Recalibrate your <em>Frequency</em>. Reconnect to <em>Source</em>. Create from <em>Truth</em>.
@@ -44,13 +46,9 @@ export default function MentorshipPage() {
           For spiritual seekers, athletes, entrepreneurs, creators, coaches and founders
           who have done the inner and the outer work &mdash; and still feel stuck.
         </p>
-        <blockquote className="mtruth__quote reveal reveal--d1">
-          &ldquo;It&rsquo;s not because you&rsquo;re broken. Underneath all the hard work
-          there&rsquo;s subconscious programming still running the show &mdash; patterns buried
-          in the nervous system, quietly repelling what you desire. That&rsquo;s the layer we
-          work on. Not surface level: energy, frequency and identity, rebuilt from
-          <em> Authentic Truth</em>.&rdquo;
-        </blockquote>
+        <ScrollRevealRB className="mtruth__quote">
+          “It’s not because you’re broken. Underneath all the hard work there’s subconscious programming still running the show — patterns buried in the nervous system, quietly repelling what you desire. That’s the layer we work on. Not surface level: energy, frequency and identity, rebuilt from Authentic Truth.”
+        </ScrollRevealRB>
       </section>
 
       <Pillars applyExternal />

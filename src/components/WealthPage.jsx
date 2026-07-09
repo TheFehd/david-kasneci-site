@@ -1,6 +1,12 @@
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PageHead from './PageHead.jsx';
 import Btn from './Btn.jsx';
 import BlurText from './BlurText.jsx';
+import SplitTextRB from './SplitTextRB.jsx';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* /wealth — the Wealth Consciousness mastermind funnel, rebuilt in the
    site's language. Copy distilled from project369.com/wealth-consciousness-page;
@@ -83,15 +89,41 @@ const IS = ['A guided container', 'Outcome-focused', 'Supportive and stabilizing
 const ISNOT = ['A content-heavy course', 'Hustle-based', 'Pressure-driven', 'Something you push through'];
 
 export default function WealthPage() {
+  const stackRef = useRef(null);
+
+  /* scroll-stack: cards pile up; each one settles back and dims as the
+     next slides over it (react-bits ScrollStack, sticky + scoped scrub) */
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const cards = stackRef.current ? [...stackRef.current.querySelectorAll('.wstack__card')] : [];
+    const triggers = [];
+    cards.forEach((card, i) => {
+      if (i === cards.length - 1) return;
+      const tw = gsap.to(card, {
+        scale: 0.94,
+        filter: 'brightness(0.6)',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: cards[i + 1],
+          start: 'top 85%',
+          end: 'top 30%',
+          scrub: true,
+        },
+      });
+      tw.scrollTrigger && triggers.push(tw.scrollTrigger);
+    });
+    return () => triggers.forEach((t) => t.kill());
+  }, []);
+
   return (
-    <>
+    <div className="wpage">
       <PageHead href={ENROLL} cta="Enroll now" />
 
       <section className="subhero subhero--center">
         <div className="subhero__inner">
           <span className="subhero__label reveal">Mastermind &middot; 30-day activation</span>
           <h1 className="subhero__title">
-            <BlurText text="Wealth Consciousness." step={0.09} />
+            <SplitTextRB text="Wealth Consciousness." delay={30} />
           </h1>
           <p className="subhero__body reveal reveal--d1">
             Manifest stable, scalable income in 30 days &mdash; without stress, pressure
@@ -105,20 +137,22 @@ export default function WealthPage() {
         </div>
       </section>
 
-      <section className="tml">
+      <section className="wstack" ref={stackRef}>
         <div className="tml__head">
           <span className="pillars__label reveal">What to expect</span>
           <h2 className="tml__title"><BlurText text="Week by week, it compounds." step={0.06} /></h2>
         </div>
-        {TIMELINE.map((t) => (
-          <div className="tml__row reveal" key={t.label}>
-            <span className="tml__n">{t.n}</span>
-            <div className="tml__body">
-              <h3>{t.label}</h3>
-              <ul>{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
-            </div>
-          </div>
-        ))}
+        <div className="wstack__cards">
+          {TIMELINE.map((t, i) => (
+            <article className="wstack__card" style={{ top: `calc(13vh + ${i * 16}px)` }} key={t.label}>
+              <span className="wstack__n">{t.n}</span>
+              <div className="wstack__body">
+                <h3>{t.label}</h3>
+                <ul>{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="phx">
@@ -144,7 +178,7 @@ export default function WealthPage() {
             {STACK.map((s) => <li key={s}>{s}</li>)}
           </ul>
           <div className="offer__price">
-            <b>$1,997</b>
+            <b className="greentext">$1,997</b>
             <s>$4,997</s>
             <span>next price raise</span>
           </div>
@@ -178,6 +212,6 @@ export default function WealthPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

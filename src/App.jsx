@@ -5,7 +5,7 @@ import ProjectsWall from './components/ProjectsWall.jsx';
 import About from './components/About.jsx';
 import Books369 from './components/Books369.jsx';
 import FinalCall from './components/FinalCall.jsx';
-import Starfield from './components/Starfield.jsx';
+import Background from './components/Background.jsx';
 import Pillars from './components/Pillars.jsx';
 import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     <>
-      <Starfield />
+      <Background />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mentorship" element={<MentorshipPage />} />
