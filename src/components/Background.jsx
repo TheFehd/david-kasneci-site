@@ -1,9 +1,5 @@
-import Starfield from './Starfield.jsx';
-
-/* Site background: the original deep-black starfield (WebGL galaxy on
-   desktop, static field on mobile). The ferrofluid experiment lightened
-   the page into grey — retired. */
-
+/* No background layer. The site is pure deep black (#070708) —
+   sections carry their own imagery. */
 export default function Background() {
-  return <Starfield />;
+  return null;
 }
