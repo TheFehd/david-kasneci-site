@@ -34,9 +34,24 @@ export function useMotion() {
     }
 
     gsap.registerPlugin(ScrollTrigger);
-    /* native scroll on touch devices — smoothing there fights the OS physics */
+    /* native scroll on touch devices — smoothing there fights the OS physics.
+       CSS scroll-behavior handles anchor glides there (see index.css). */
     if (window.matchMedia('(pointer: coarse)').matches) return;
     const lenis = new Lenis({ duration: 0.85, smoothWheel: true });
+
+    /* anchor links glide instead of jumping */
+    const onAnchorClick = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a || a.getAttribute('href').length < 2) return;
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, {
+        duration: 1.4,
+        easing: (t) => 1 - Math.pow(1 - t, 4),
+      });
+    };
+    document.addEventListener('click', onAnchorClick);
     lenis.on('scroll', ScrollTrigger.update);
     const raf = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
@@ -44,6 +59,7 @@ export function useMotion() {
 
     return () => {
       if (io) io.disconnect();
+      document.removeEventListener('click', onAnchorClick);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };

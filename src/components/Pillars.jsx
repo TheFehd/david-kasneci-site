@@ -89,6 +89,27 @@ const PILLARS = [
   },
 ];
 
+/* split a title into word > char spans for the clip-reveal (SplitText style) */
+function splitChars(el) {
+  const words = el.textContent.split(' ');
+  el.textContent = '';
+  const chars = [];
+  words.forEach((w, wi) => {
+    const word = document.createElement('span');
+    word.className = 'pv__word';
+    for (const ch of w) {
+      const c = document.createElement('span');
+      c.className = 'pv__char';
+      c.textContent = ch;
+      word.appendChild(c);
+      chars.push(c);
+    }
+    el.appendChild(word);
+    if (wi < words.length - 1) el.appendChild(document.createTextNode(' '));
+  });
+  return chars;
+}
+
 const isStatic = () =>
   window.matchMedia('(max-width: 860px)').matches ||
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -115,6 +136,7 @@ export default function Pillars() {
     const phases = section.querySelectorAll('.pv__phase');
     const fill = section.querySelector('.pv__progress i');
     const n = phases.length;
+    const charsOf = [...phases].map((ph) => splitChars(ph.querySelector('.pv__title')));
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -124,6 +146,12 @@ export default function Pillars() {
         pin: true,
         scrub: 0.5,
         snap: { snapTo: 'labels', duration: { min: 0.25, max: 0.65 }, ease: 'power2.inOut' },
+        onEnter: () => {
+          /* first chapter title rises when the takeover begins */
+          gsap.fromTo(charsOf[0], { yPercent: 105 }, {
+            yPercent: 0, duration: 0.7, stagger: 0.018, ease: 'power3.out', overwrite: true,
+          });
+        },
       },
     });
 
@@ -135,6 +163,7 @@ export default function Pillars() {
       tl.fromTo(phases[i], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: 'none' }, '<');
       tl.fromTo(phases[i].querySelector('.pv__media img'), { scale: 1.08 }, { scale: 1, duration: 0.6, ease: 'power2.out' }, '<');
       tl.fromTo(phases[i].querySelector('.pv__content'), { autoAlpha: 0, y: 46 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '<0.08');
+      tl.fromTo(charsOf[i], { yPercent: 105 }, { yPercent: 0, duration: 0.4, stagger: 0.014, ease: 'power3.out' }, '<0.05');
       tl.to(fill, { scaleX: (i + 1) / n, duration: 0.5, ease: 'none' }, '<');
       tl.addLabel(`p${i}`);
       tl.to({}, { duration: 0.3 });

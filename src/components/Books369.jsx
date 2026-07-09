@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import Btn from './Btn.jsx';
+import BlurText from './BlurText.jsx';
 
 /* triquetra glyph — the "O" of the PROJECT 369 wordmark */
 function Triquetra({ ring = false, className = '' }) {
@@ -138,8 +139,8 @@ export default function Books369() {
     <section className="b369" id="books" ref={sectionRef}>
       <div className="b369__head">
         <span className="b369__label reveal">The Books</span>
-        <h2 className="b369__title reveal reveal--d1">
-          Project <em>369</em>
+        <h2 className="b369__title">
+          <BlurText text="Project 369" step={0.12} />
         </h2>
         <p className="b369__sub reveal reveal--d2">
           Three keys, a planner and a journal — the 3-6-9 manifestation practice, on paper.

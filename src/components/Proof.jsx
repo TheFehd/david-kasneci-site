@@ -1,6 +1,7 @@
 import ShinyText from './ShinyText.jsx';
 import CountUp from './CountUp.jsx';
 import Btn from './Btn.jsx';
+import BlurText from './BlurText.jsx';
 
 /* Verified reviews — every entry below is a real verified purchase scraped from
    the Project 369 store (Loox widget on 369project.com). Photos are the
@@ -141,7 +142,7 @@ export default function Proof() {
       <div className="proof__inner">
         <div className="proof__head">
           <span className="proof__label reveal">Verified reviews</span>
-          <h2 className="proof__title reveal reveal--d1">3,997 readers wrote back.</h2>
+          <h2 className="proof__title"><BlurText text="3,997 readers wrote back." step={0.07} /></h2>
           <p className="proof__subnote reveal reveal--d2">
             Every review below is a verified purchase from the Project&nbsp;369 store,
             photographed by the reader who wrote it.

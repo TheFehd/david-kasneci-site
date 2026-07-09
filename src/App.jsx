@@ -8,6 +8,7 @@ import Pillars from './components/Pillars.jsx';
 import Initiation from './components/Initiation.jsx';
 import Proof from './components/Proof.jsx';
 import StickyBar from './components/StickyBar.jsx';
+import GradualBlur from './components/GradualBlur.jsx';
 import Footer from './components/Footer.jsx';
 import { useMotion } from './hooks/useMotion.js';
 
@@ -25,6 +26,7 @@ export default function App() {
       <Proof />
       <FinalCall />
       <Footer />
+      <GradualBlur />
       <StickyBar />
 
       {/* single reusable star glyph for the testimonial ratings */}

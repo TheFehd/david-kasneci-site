@@ -1839,3 +1839,80 @@ html, body {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
+
+/* ---------- BLURTEXT (react-bits) — words sharpen out of a blur ---------- */
+.blurtext { display: inline; }
+.blurtext__w {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(9px);
+  transform: translateY(0.35em);
+  transition: opacity 0.7s var(--ease), filter 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.blurtext.is-in .blurtext__w { opacity: 1; filter: blur(0); transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .blurtext__w { opacity: 1; filter: none; transform: none; transition: none; }
+}
+
+/* ---------- chapter title char reveal (SplitText) ---------- */
+.pv__word { display: inline-block; overflow: hidden; vertical-align: top; }
+.pv__char { display: inline-block; will-change: transform; }
+.pillars--static .pv__char { transform: none !important; }
+
+/* ---------- GRADUAL BLUR (react-bits) — frosted depth at the fold ---------- */
+.gblur {
+  position: fixed;
+  z-index: 55; /* under the buy bar (60), over content */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  pointer-events: none;
+}
+.gblur > div { position: absolute; inset: 0; }
+
+/* ---------- INITIATION: live prism light ---------- */
+.init__prism {
+  position: absolute;
+  inset: -2% 0;
+  z-index: -1;
+  opacity: 0.85;
+  mix-blend-mode: screen; /* beams add light over the night sky */
+}
+.init__prism .prism-container { position: relative; width: 100%; height: 100%; }
+
+/* ---------- MOBILE: anchor glide + readable hero name ---------- */
+@media (pointer: coarse) {
+  html { scroll-behavior: smooth; }
+}
+@media (max-width: 640px) {
+  .hero__title {
+    color: rgba(244, 244, 243, 0.96); /* the name stays readable behind David */
+    text-shadow: 0 2px 26px rgba(0, 0, 0, 0.75), 0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ---------- MOBILE: compact two-column review masonry ---------- */
+@media (max-width: 600px) {
+  .rwall { columns: 2; column-gap: 10px; }
+  .rw { margin-bottom: 10px; border-radius: 14px; }
+  .rw__imgwrap img, .rw__imgwrap video { max-height: 180px; }
+  .rw__body { padding: 12px 13px 14px; }
+  .rw__quote {
+    margin: 8px 0 10px;
+    font-size: 12px;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .rw__name { font-size: 13.5px; }
+  .rw__verified { font-size: 8.5px; }
+  .rw__verified svg { width: 11px; height: 11px; }
+  .rw__product { font-size: 9px; margin-top: 5px; }
+  .rw__watch { font-size: 9.5px; margin-top: 8px; }
+  /* keep the wall a quick scroll: video + first six photo cards */
+  .rw:nth-child(n + 8) { display: none; }
+  .pullq__quote p { font-size: 17.5px; line-height: 1.55; }
+}

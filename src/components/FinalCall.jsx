@@ -1,4 +1,4 @@
-import SplitWords from './SplitWords.jsx';
+import BlurText from './BlurText.jsx';
 import Btn from './Btn.jsx';
 
 /* Closing call — 21st.dev AnimatedMarqueeHero pattern, rebuilt for this site:
@@ -25,8 +25,8 @@ export default function FinalCall() {
     <section className="fcall" id="apply">
       <div className="fcall__inner">
         <span className="fcall__tag reveal">One client at a time &middot; by application</span>
-        <h2 className="fcall__title reveal reveal-w reveal--d1">
-          <SplitWords text="Some chapters you don't write alone." />
+        <h2 className="fcall__title">
+          <BlurText text={"Some chapters you don\u2019t write alone."} step={0.07} />
         </h2>
         <p className="fcall__desc reveal reveal--d2">
           Six areas of work &mdash; business, love, healing, health, spirit, direction.
