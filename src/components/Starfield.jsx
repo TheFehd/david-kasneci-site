@@ -155,7 +155,10 @@ export default function Starfield() {
     const canvas = ref.current;
     if (!canvas) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const gl = reduce
+    /* phones + coarse pointers get the free static field — the shader is a
+       desktop luxury, not worth battery or scroll jank on mobile */
+    const lite = window.matchMedia('(max-width: 860px), (pointer: coarse)').matches;
+    const gl = (reduce || lite)
       ? null
       : canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
     if (!gl) {
@@ -205,7 +208,7 @@ export default function Starfield() {
     ].forEach((n) => { U[n] = gl.getUniformLocation(prog, n); });
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const dpr = 1; /* stars don't need retina; halves the fill cost */
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -235,8 +238,11 @@ export default function Starfield() {
     document.documentElement.addEventListener('mouseleave', onLeave);
 
     let raf;
+    let last = 0;
     const frame = (t) => {
       raf = requestAnimationFrame(frame);
+      if (t - last < 33) return; /* 30fps is plenty for a twinkle */
+      last = t;
       const time = t * 0.001;
       smoothMouse.x += (targetMouse.x - smoothMouse.x) * 0.05;
       smoothMouse.y += (targetMouse.y - smoothMouse.y) * 0.05;
@@ -250,8 +256,15 @@ export default function Starfield() {
     };
     raf = requestAnimationFrame(frame);
 
+    const onVis = () => {
+      cancelAnimationFrame(raf);
+      if (!document.hidden) raf = requestAnimationFrame(frame);
+    };
+    document.addEventListener('visibilitychange', onVis);
+
     return () => {
       cancelAnimationFrame(raf);
+      document.removeEventListener('visibilitychange', onVis);
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMove);
       document.documentElement.removeEventListener('mouseleave', onLeave);

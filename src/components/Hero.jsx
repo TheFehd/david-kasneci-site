@@ -1,4 +1,21 @@
+import { useEffect, useState } from 'react';
+
+const LINKS = [
+  ['About', '#about'],
+  ['Books', '#books'],
+  ['Mentorship', '#mentorship'],
+  ['Reviews', '#reviews'],
+  ['Contact', 'https://369project.com/pages/contact'],
+];
+
 export default function Hero() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    return () => { document.documentElement.style.overflow = ''; };
+  }, [open]);
+
   return (
     <main className="hero" id="top">
       <div className="hero__bg" />
@@ -13,6 +30,40 @@ export default function Hero() {
         <a className="nav__side" href="#reviews">Reviews</a>
         <a className="nav__side" href="https://369project.com/pages/contact">Contact</a>
       </nav>
+
+      <button
+        className={`nav__burger${open ? ' is-open' : ''}`}
+        aria-label={open ? 'Close menu' : 'Open menu'}
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <i /><i />
+      </button>
+
+      <div className={`mobnav${open ? ' is-open' : ''}`} aria-hidden={!open}>
+        <nav className="mobnav__links">
+          {LINKS.map(([label, href], i) => (
+            <a
+              key={label}
+              href={href}
+              style={{ transitionDelay: open ? `${0.08 + i * 0.05}s` : '0s' }}
+              onClick={() => setOpen(false)}
+              {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <a
+          className="mobnav__store"
+          href="https://369project.com"
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => setOpen(false)}
+        >
+          Visit the store &rarr;
+        </a>
+      </div>
 
       <div className="hero__titleWrap">
         <h1 className="hero__title">David Kasneci</h1>

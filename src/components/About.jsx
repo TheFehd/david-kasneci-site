@@ -1,30 +1,13 @@
 import CountUp from './CountUp.jsx';
 import Btn from './Btn.jsx';
-import Galaxy from './Galaxy.jsx';
 import SplitWords from './SplitWords.jsx';
 
 /* The Work — David's publishing house + proof stack.
-   Galaxy background (react-bits), swappable photo card, stat strip. */
+   Photo rail, count-up stat strip, split-word lead over the site starfield. */
 
 export default function About() {
   return (
     <section className="about" id="about">
-      <div className="about__bg" aria-hidden="true">
-        <Galaxy
-          className="about__galaxy"
-          density={0.85}
-          glowIntensity={0.28}
-          saturation={0}
-          hueShift={0}
-          twinkleIntensity={0.35}
-          starSpeed={0.45}
-          speed={0.55}
-          rotationSpeed={0.06}
-          mouseInteraction
-        />
-        <div className="about__veil" />
-      </div>
-
       <div className="about__inner">
         <figure className="about__rail reveal">
           <div className="about__frame">

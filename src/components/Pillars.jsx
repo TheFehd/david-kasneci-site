@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Btn from './Btn.jsx';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-/* Work 1-1 — pinned chapter deck. The section takes over the scroll and
-   snaps through the six areas, each with David's real photo from the
-   coaching page. Static stacked layout on mobile / reduced motion. */
+/* Work 1-1 — full-bleed pinned chapters. Each area IS the page for a beat:
+   edge-to-edge photo, scrim, content low-left, thin progress line up top.
+   Snaps chapter to chapter. Stacked full-width blocks on mobile / reduced
+   motion — same design, no pin. */
 
 const PILLARS = [
   {
@@ -88,88 +89,92 @@ const PILLARS = [
   },
 ];
 
+const isStatic = () =>
+  window.matchMedia('(max-width: 860px)').matches ||
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export default function Pillars() {
   const sectionRef = useRef(null);
+  const [staticMode, setStaticMode] = useState(isStatic);
+
+  /* re-evaluate when the breakpoint flips (rotation, window resize) */
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 860px)');
+    const onChange = () => setStaticMode(isStatic());
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const narrow = window.matchMedia('(max-width: 860px)').matches;
     const section = sectionRef.current;
     if (!section) return;
-    if (reduce || narrow) { section.classList.add('pillars--static'); return; }
+    if (staticMode) { section.classList.add('pillars--static'); return; }
+    section.classList.remove('pillars--static');
 
     gsap.registerPlugin(ScrollTrigger);
     const phases = section.querySelectorAll('.pv__phase');
-    const fill = section.querySelector('.pv__railFill');
-    const dots = section.querySelectorAll('.pv__dot');
+    const fill = section.querySelector('.pv__progress i');
     const n = phases.length;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: `+=${n * 90}%`,
+        end: `+=${n * 85}%`,
         pin: true,
         scrub: 0.5,
-        snap: { snapTo: 'labels', duration: { min: 0.25, max: 0.7 }, ease: 'power2.inOut' },
+        snap: { snapTo: 'labels', duration: { min: 0.25, max: 0.65 }, ease: 'power2.inOut' },
       },
     });
 
     tl.addLabel('p0');
-    dots[0] && tl.set(dots[0], { backgroundColor: '#f5f5f5' }, 'p0');
     for (let i = 1; i < n; i++) {
-      tl.to(phases[i - 1].querySelector('.pv__text'), { autoAlpha: 0, y: -34, duration: 0.42, ease: 'power2.in' });
-      tl.to(phases[i - 1].querySelector('.pv__imgwrap'), { autoAlpha: 0, scale: 1.05, duration: 0.42, ease: 'power2.in' }, '<');
-      tl.fromTo(phases[i].querySelector('.pv__imgwrap'), { autoAlpha: 0, scale: 1.08 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power2.out' });
-      tl.fromTo(phases[i].querySelector('.pv__text'), { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '<0.06');
-      tl.set(phases[i], { zIndex: 2 }, '<');
-      dots[i] && tl.set(dots[i], { backgroundColor: '#f5f5f5' }, '<');
-      tl.to(fill, { height: `${(i / (n - 1)) * 100}%`, duration: 0.5, ease: 'none' }, '<');
+      tl.to(phases[i - 1].querySelector('.pv__content'), { autoAlpha: 0, y: -40, duration: 0.4, ease: 'power2.in' });
+      tl.to(phases[i - 1], { autoAlpha: 0, duration: 0.45, ease: 'none' }, '<0.1');
+      tl.set(phases[i], { zIndex: 2 });
+      tl.fromTo(phases[i], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: 'none' }, '<');
+      tl.fromTo(phases[i].querySelector('.pv__media img'), { scale: 1.08 }, { scale: 1, duration: 0.6, ease: 'power2.out' }, '<');
+      tl.fromTo(phases[i].querySelector('.pv__content'), { autoAlpha: 0, y: 46 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '<0.08');
+      tl.to(fill, { scaleX: (i + 1) / n, duration: 0.5, ease: 'none' }, '<');
       tl.addLabel(`p${i}`);
-      tl.to({}, { duration: 0.35 }); // breathing room at each stop
+      tl.to({}, { duration: 0.3 });
     }
 
     return () => {
       tl.scrollTrigger && tl.scrollTrigger.kill();
       tl.kill();
     };
-  }, []);
+  }, [staticMode]);
 
   return (
     <section className="pillars" id="mentorship" ref={sectionRef}>
       <div className="pillars__pin">
-        <div className="pillars__chrome">
+        {PILLARS.map((p, i) => (
+          <article className={`pv__phase${i === 0 ? ' is-lead' : ''}`} key={p.title}>
+            <div className="pv__media" aria-hidden={i === 0 ? undefined : 'true'}>
+              <img src={p.img} alt={p.alt} loading={i === 0 ? 'eager' : 'lazy'} />
+            </div>
+            <div className="pv__scrim" aria-hidden="true" />
+            <div className="pv__content">
+              <span className="pv__count">{String(i + 1).padStart(2, '0')} &mdash; 06</span>
+              <h3 className="pv__title">{p.title}</h3>
+              <span className="pv__hook">{p.hook}</span>
+              <p className="pv__lead">{p.lead}</p>
+              <ul className="pv__points">
+                {p.points.map((pt) => <li key={pt}>{pt}</li>)}
+              </ul>
+              <p className="pv__best"><span>Best for</span> {p.bestFor}</p>
+            </div>
+          </article>
+        ))}
+
+        <div className="pv__chrome" aria-hidden="false">
+          <span className="pv__progress"><i /></span>
           <span className="pillars__label">Work 1&ndash;1</span>
-          <Btn sm href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
-            Apply for 1&ndash;1
-          </Btn>
-        </div>
-
-        <div className="pv">
-          <div className="pv__rail" aria-hidden="true">
-            <span className="pv__railFill" />
-            {PILLARS.map((p, i) => <i className="pv__dot" key={i} />)}
-          </div>
-
-          <div className="pv__stage">
-            {PILLARS.map((p, i) => (
-              <article className={`pv__phase${i === 0 ? ' is-lead' : ''}`} key={p.title}>
-                <div className="pv__imgwrap">
-                  <img src={p.img} alt={p.alt} loading={i === 0 ? 'eager' : 'lazy'} />
-                  <span className="pv__imgnum" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="pv__text">
-                  <span className="pv__count">{String(i + 1).padStart(2, '0')} / 06</span>
-                  <h3 className="pv__title">{p.title}</h3>
-                  <span className="pv__hook">{p.hook}</span>
-                  <p className="pv__lead">{p.lead}</p>
-                  <ul className="pv__points">
-                    {p.points.map((pt) => <li key={pt}>{pt}</li>)}
-                  </ul>
-                  <p className="pv__best"><span>Best for</span> {p.bestFor}</p>
-                </div>
-              </article>
-            ))}
+          <div className="pv__apply">
+            <Btn sm href="https://project369.com/1-1-coaching" target="_blank" rel="noreferrer">
+              Apply for 1&ndash;1
+            </Btn>
           </div>
         </div>
       </div>
