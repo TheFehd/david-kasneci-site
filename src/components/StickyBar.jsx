@@ -17,7 +17,10 @@ export default function StickyBar() {
       ticking = true;
       requestAnimationFrame(() => {
         const books = document.getElementById('books');
-        setShow(books ? window.scrollY > books.offsetTop + books.offsetHeight * 0.5 : false);
+        if (books && window.scrollY > books.offsetTop + books.offsetHeight * 0.5) {
+          setShow(true); /* latches — no slide-out churn while scrolling */
+          window.removeEventListener('scroll', onScroll);
+        }
         ticking = false;
       });
     };

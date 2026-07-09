@@ -1016,6 +1016,7 @@ html, body {
   padding: 14px 0;
 }
 .fcall__track {
+  will-change: transform;
   display: flex;
   gap: clamp(14px, 1.6vw, 22px);
   width: max-content;
@@ -1036,7 +1037,8 @@ html, body {
   to   { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fcall__track { animation: none; }
+  .fcall__track {
+  will-change: transform; animation: none; }
 }
 
 /* ---------- PROOF / TESTIMONIALS ---------- */
@@ -1760,13 +1762,6 @@ html, body {
   .footer { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
 }
 
-/* ---------- PERF: skip rendering far-offscreen heavy sections ---------- */
-.proof,
-.fcall,
-.init {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
-}
 
 /* ---------- BLURTEXT (react-bits) — words sharpen out of a blur ---------- */
 .blurtext { display: inline; }
@@ -2021,3 +2016,7 @@ html, body {
   .buybar__btnShort { display: inline; }
   .buybar__close { margin-left: -6px; }
 }
+
+/* marquee runs only while the section is on screen */
+.fcall .fcall__track { animation-play-state: paused; }
+.fcall.is-live .fcall__track { animation-play-state: running; }

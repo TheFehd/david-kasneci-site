@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import BlurText from './BlurText.jsx';
 import Btn from './Btn.jsx';
 
@@ -21,8 +22,22 @@ const IMAGES = [
 ];
 
 export default function FinalCall() {
+  const ref = useRef(null);
+
+  /* the film strip only animates while the section is on screen */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => el.classList.toggle('is-live', entry.isIntersecting),
+      { rootMargin: '80px 0px' },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className="fcall" id="apply">
+    <section className="fcall" id="apply" ref={ref}>
       <div className="fcall__inner">
         <span className="fcall__tag reveal">One client at a time &middot; by application</span>
         <h2 className="fcall__title">
