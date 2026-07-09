@@ -140,7 +140,7 @@ export default function Books369() {
       <div className="b369__head">
         <span className="b369__label reveal">The Books</span>
         <h2 className="b369__title">
-          <BlurText text="Project *369" step={0.12} />
+          <BlurText text="Project 369" step={0.12} />
         </h2>
         <p className="b369__sub reveal reveal--d2">
           Three keys, a planner and a journal — the 3-6-9 manifestation practice, on paper.

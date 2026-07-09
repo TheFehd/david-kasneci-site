@@ -141,7 +141,7 @@ export default function Proof() {
       <div className="proof__inner">
         <div className="proof__head">
           <span className="proof__label reveal">Verified reviews</span>
-          <h2 className="proof__title"><BlurText text="*3,997 readers wrote back." step={0.07} /></h2>
+          <h2 className="proof__title"><BlurText text="3,997 readers wrote back." step={0.07} /></h2>
           <p className="proof__subnote reveal reveal--d2">
             Every review below is a verified purchase from the Project&nbsp;369 store,
             photographed by the reader who wrote it.

@@ -43,7 +43,7 @@ export default function Initiation() {
       <div className="init__inner">
         <span className="init__label reveal">After the 33 days</span>
         <h2 className="init__title">
-          <BlurText text="The *Initiation" step={0.14} delay={0.1} />
+          <BlurText text="The Initiation" step={0.14} delay={0.1} />
         </h2>
         <p className="init__body reveal reveal--d2">
           The books hand you the practice. The Initiation is for the people who finish it

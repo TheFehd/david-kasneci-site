@@ -19,7 +19,7 @@ export default function Background() {
     return (
       <div className="bgfx" aria-hidden="true">
         <Ferrofluid
-          colors={['#0c0c0d', '#1d1d20', '#34343a', '#0e5c46']}
+          colors={['#0c0c0d', '#1d1d20', '#2e2e33', '#3d3d42']}
           dpr={1}
           mouseForce={0.9}
         />

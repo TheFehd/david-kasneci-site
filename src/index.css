@@ -595,8 +595,7 @@ html, body {
   inset: -6%;
   z-index: -2;
   background: url("/assets/369/planner.jpg") center 30% / cover no-repeat;
-  /* the planner sky is purple — pull it to the emerald family */
-  filter: hue-rotate(245deg) saturate(0.65) brightness(0.72);
+  filter: saturate(0.8) brightness(0.75);
   animation: initDrift 36s ease-in-out infinite alternate;
 }
 @keyframes initDrift {
@@ -1311,7 +1310,7 @@ html, body {
   width: min(1100px, 96vw);
   aspect-ratio: 2 / 1;
   transform: translate(-50%, -50%);
-  background: radial-gradient(50% 50% at 50% 50%, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.04) 55%, transparent 75%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(76, 56, 122, 0.22), rgba(41, 30, 72, 0.1) 55%, transparent 75%);
   pointer-events: none;
 }
 .b369__head { position: relative; text-align: center; max-width: 720px; margin: 0 auto clamp(40px, 6vw, 74px); }
@@ -2629,7 +2628,7 @@ html, body {
 }
 
 /* selection + scrollbar carry the brand */
-::selection { background: rgba(52, 211, 153, 0.28); color: #ffffff; }
+::selection { background: rgba(240, 240, 240, 0.9); color: #070708; }
 * { scrollbar-width: thin; scrollbar-color: rgba(240, 240, 240, 0.22) transparent; }
 ::-webkit-scrollbar { width: 9px; }
 ::-webkit-scrollbar-thumb { background: rgba(240, 240, 240, 0.18); border-radius: 100px; border: 2px solid #070708; }
@@ -2740,3 +2739,6 @@ html, body {
   object-fit: contain;
 }
 .footer__logo img { width: 78%; height: auto; opacity: 0.92; }
+
+/* wealth keeps its emerald sky; the main site stays untinted */
+.wpage .init__bg { filter: hue-rotate(245deg) saturate(0.65) brightness(0.72); }
