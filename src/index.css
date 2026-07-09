@@ -503,46 +503,26 @@ html, body {
   .pw__m--house { letter-spacing: 0.18em; }
 }
 
-/* ---------- BUTTONS (corner-bracket editorial) ---------- */
+/* ---------- BUTTONS (Magic UI animated-shiny-text) ---------- */
 .btn {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 17px 34px;
+  justify-content: center;
+  padding: 16px 32px;
   text-decoration: none;
-  color: var(--title);
-  background: transparent;
-  transition: color 0.45s var(--ease), background-color 0.45s var(--ease);
+  background: rgba(240, 240, 240, 0.04);
+  border: 1px solid rgba(240, 240, 240, 0.16);
+  border-radius: 100px;
+  transition: border-color 0.45s var(--ease), background-color 0.45s var(--ease), transform 0.45s var(--ease);
 }
-/* two corner brackets that grow into a full frame on hover */
-.btn::before,
-.btn::after {
-  content: "";
-  position: absolute;
-  width: 13px;
-  height: 13px;
-  transition: width 0.5s var(--ease), height 0.5s var(--ease), border-color 0.5s var(--ease);
-  pointer-events: none;
+.btn:hover {
+  border-color: rgba(240, 240, 240, 0.42);
+  background: rgba(240, 240, 240, 0.07);
+  transform: translateY(-1px);
 }
-.btn::before {
-  top: 0;
-  left: 0;
-  border-top: 1px solid rgba(240, 240, 240, 0.6);
-  border-left: 1px solid rgba(240, 240, 240, 0.6);
-}
-.btn::after {
-  bottom: 0;
-  right: 0;
-  border-bottom: 1px solid rgba(240, 240, 240, 0.6);
-  border-right: 1px solid rgba(240, 240, 240, 0.6);
-}
-.btn:hover::before,
-.btn:hover::after {
-  width: 100%;
-  height: 100%;
-  border-color: var(--accent);
-}
-.btn:hover { color: var(--accent); }
+.btn:focus-visible { outline: 1px solid rgba(240, 240, 240, 0.65); outline-offset: 4px; }
+/* the label carries a slow shine sweep, always on */
 .btn__label {
   font-family: var(--sans);
   font-weight: 500;
@@ -551,46 +531,62 @@ html, body {
   text-transform: uppercase;
   white-space: nowrap;
   line-height: 1;
+  color: transparent;
+  background: linear-gradient(
+    110deg,
+    rgba(240, 240, 240, 0.55) 35%,
+    #ffffff 48%,
+    #ffffff 52%,
+    rgba(240, 240, 240, 0.55) 65%
+  );
+  background-size: 220% 100%;
+  background-position: 120% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: btnShine 4.5s cubic-bezier(0.6, 0.6, 0, 1) infinite;
 }
-.btn:focus-visible { outline: 1px solid rgba(240, 240, 240, 0.65); outline-offset: 6px; }
+@keyframes btnShine {
+  0%   { background-position: 120% 0; }
+  60%  { background-position: -120% 0; }
+  100% { background-position: -120% 0; }
+}
+.btn:hover .btn__label { animation-duration: 1.6s; }
 
-/* solid: filled plate, brackets sit outside and close in on hover */
+/* solid: white plate, plain black label */
 .btn--solid {
   background: var(--accent);
+  border-color: var(--accent);
+}
+.btn--solid:hover { background: #ffffff; border-color: #ffffff; transform: translateY(-1px); }
+.btn--solid .btn__label {
+  animation: none;
+  background: none;
   color: var(--black);
+  -webkit-text-fill-color: var(--black);
 }
-.btn--solid::before { top: -6px; left: -6px; }
-.btn--solid::after { bottom: -6px; right: -6px; }
-.btn--solid:hover::before,
-.btn--solid:hover::after {
-  width: calc(100% + 12px);
-  height: calc(100% + 12px);
-}
-.btn--solid:hover { background: transparent; color: var(--accent); }
 
-/* ghost: quiet underline that brightens */
-.btn--ghost { padding: 8px 0; }
-.btn--ghost::before,
-.btn--ghost::after { display: none; }
+/* ghost: bare shiny text with a quiet underline */
+.btn--ghost { padding: 8px 0; border: none; background: transparent; border-radius: 0; }
+.btn--ghost:hover { background: transparent; transform: none; }
 .btn--ghost .btn__label {
   letter-spacing: 0.16em;
-  color: rgba(240, 240, 240, 0.62);
   border-bottom: 1px solid rgba(240, 240, 240, 0.22);
   padding-bottom: 7px;
-  transition: color 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.btn--ghost:hover .btn__label {
-  color: var(--accent);
-  border-bottom-color: rgba(240, 240, 240, 0.55);
-}
+.btn--ghost:hover .btn__label { border-bottom-color: rgba(240, 240, 240, 0.55); }
 
 .btn--sm { padding: 12px 22px; }
 .btn--sm .btn__label { font-size: 10.5px; letter-spacing: 0.2em; }
 
-.btn:hover .shiny-text {
-  -webkit-text-fill-color: currentColor;
-  background: none;
-  animation: none;
+@media (prefers-reduced-motion: reduce) {
+  .btn__label {
+    animation: none;
+    background: none;
+    color: var(--title);
+    -webkit-text-fill-color: var(--title);
+  }
+  .btn--solid .btn__label { color: var(--black); -webkit-text-fill-color: var(--black); }
 }
 
 /* ---------- books CTA row ---------- */

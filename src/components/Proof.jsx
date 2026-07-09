@@ -1,4 +1,3 @@
-import ShinyText from './ShinyText.jsx';
 import CountUp from './CountUp.jsx';
 import Btn from './Btn.jsx';
 import BlurText from './BlurText.jsx';
@@ -233,7 +232,7 @@ export default function Proof() {
 
         <div className="proof__cta reveal">
           <Btn href="https://369project.com/collections/project-369-books" target="_blank" rel="noreferrer">
-            <ShinyText text="Read all 3,997 reviews" />
+            Read all 3,997 reviews
           </Btn>
           <p className="proof__note">Reviews collected and verified by Loox on 369project.com &mdash; shown as posted.</p>
         </div>

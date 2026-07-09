@@ -140,7 +140,7 @@ export default function Pillars() {
         const title = ph.querySelector('.pv__title');
         const chars = splitChars(title);
         chars.forEach((c, i) => { c.style.transitionDelay = `${0.08 + i * 0.016}s`; });
-        ph.querySelectorAll('.pv__count, .pv__hook, .pv__lead, .pv__points li, .pv__best')
+        ph.querySelectorAll('.pv__hook, .pv__lead, .pv__points li, .pv__best')
           .forEach((el, i) => { el.style.transitionDelay = `${0.25 + i * 0.055}s`; });
       });
       if (reduce) {
@@ -211,7 +211,6 @@ export default function Pillars() {
             </div>
             <div className="pv__scrim" aria-hidden="true" />
             <div className="pv__content">
-              <span className="pv__count">{String(i + 1).padStart(2, '0')} &mdash; 06</span>
               <h3 className="pv__title">{p.title}</h3>
               <span className="pv__hook">{p.hook}</span>
               <p className="pv__lead">{p.lead}</p>
