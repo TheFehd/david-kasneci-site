@@ -29,15 +29,19 @@ export default function BlurText({ text, step = 0.06, delay = 0, className = '' 
 
   return (
     <span className={`blurtext ${className}`} ref={ref}>
-      {text.split(' ').map((w, i) => (
-        <span
-          className="blurtext__w"
-          style={{ transitionDelay: `${delay + i * step}s` }}
-          key={i}
-        >
-          {w}&nbsp;
-        </span>
-      ))}
+      {text.split(' ').map((w, i) => {
+        const fancy = w.startsWith('*');
+        const word = fancy ? w.slice(1) : w;
+        return (
+          <span
+            className={`blurtext__w${fancy ? ' fx' : ''}`}
+            style={{ transitionDelay: `${delay + i * step}s` }}
+            key={i}
+          >
+            {word}&nbsp;
+          </span>
+        );
+      })}
     </span>
   );
 }

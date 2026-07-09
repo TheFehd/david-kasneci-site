@@ -5,6 +5,8 @@ import PageHead from './PageHead.jsx';
 import Btn from './Btn.jsx';
 import BlurText from './BlurText.jsx';
 import SplitTextRB from './SplitTextRB.jsx';
+import DeviceScroll from './DeviceScroll.jsx';
+import GrowthChart from './GrowthChart.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,33 +44,42 @@ const TIMELINE = [
   ]},
 ];
 
+const ICONS = {
+  layers: <path d="M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16.5l9 5 9-5" />,
+  spark: <path d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3.5 3.5M15.5 15.5 19 19M19 5l-3.5 3.5M8.5 15.5 5 19" />,
+  heart: <path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.6 4c1.7 0 3.3.9 4.4 2.4C13.1 4.9 14.7 4 16.4 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2Zm-8-9h4l2-3 3 5 2-3h6" />,
+  bolt: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
+  grid: <path d="M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14" />,
+  compass: <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm4-14-2.5 6L8 16l2.5-6L16 8Z" />,
+};
+
 const PHASES = [
-  { name: 'Identity Stabilization & Nervous-System Regulation', points: [
+  { name: 'Foundation', icon: 'layers', points: [
     'Money stops feeling threatening to your system',
     'Fear, doubt and urgency leave your decisions',
     'A stable foundation where wealth can actually hold',
   ]},
-  { name: 'Creativity & Openness', points: [
+  { name: 'Creative Genius', icon: 'spark', points: [
     'Attract authentic ideas and opportunities',
     'The hidden psychology of creating, selling and receiving',
     'Scattered ideas become structured opportunities',
   ]},
-  { name: 'Clearing Money & Decision Blocks', points: [
+  { name: 'Healing & Clearing', icon: 'heart', points: [
     'Dissolve the subconscious blocks that sabotage breakthroughs',
     'Release patterns tied to money, worth and visibility',
     'Momentum continues instead of resetting',
   ]},
-  { name: 'Aligned Execution & Inspired Action', points: [
+  { name: 'Inspired Action', icon: 'bolt', points: [
     'Clarity becomes consistent, aligned action',
     'Procrastination, avoidance and burnout eliminated',
     'Execution habits that compound',
   ]},
-  { name: 'Sales & Marketing Systems', points: [
+  { name: 'Systems & Scale', icon: 'grid', points: [
     'Simple structures that increase income',
     'David’s own templates — no chaos, no guesswork',
     'Exact AI workflows, handed to you',
   ]},
-  { name: 'Clarity of Success', points: [
+  { name: 'Integration & Path Selection', icon: 'compass', points: [
     'Your next level of income, made explicit',
     'One direction to go all in on',
     'A roadmap that feels grounded and sustainable',
@@ -123,7 +134,7 @@ export default function WealthPage() {
         <div className="subhero__inner">
           <span className="subhero__label reveal">Mastermind &middot; 30-day activation</span>
           <h1 className="subhero__title">
-            <SplitTextRB text="Wealth Consciousness." delay={30} />
+            <SplitTextRB text="Wealth" fancy="Consciousness." delay={30} />
           </h1>
           <p className="subhero__body reveal reveal--d1">
             Manifest stable, scalable income in 30 days &mdash; without stress, pressure
@@ -140,7 +151,7 @@ export default function WealthPage() {
       <section className="wstack" ref={stackRef}>
         <div className="tml__head">
           <span className="pillars__label reveal">What to expect</span>
-          <h2 className="tml__title"><BlurText text="Week by week, it compounds." step={0.06} /></h2>
+          <h2 className="tml__title"><BlurText text="Week by week, it *compounds." step={0.06} /></h2>
         </div>
         <div className="wstack__cards">
           {TIMELINE.map((t, i) => (
@@ -155,21 +166,36 @@ export default function WealthPage() {
         </div>
       </section>
 
+      <DeviceScroll
+        eyebrow="Inside the mastermind"
+        title={<>Every phase, on every <i className="fx">screen.</i></>}
+        sub="Video trainings, workbooks, live calls and systems — the full activation, wherever you are."
+        img="/assets/369/wealth/stack.jpg"
+        alt="The Wealth Consciousness course on desktops, laptops, tablets and phones"
+      />
+
       <section className="phx">
         <div className="tml__head">
           <span className="pillars__label reveal">The curriculum</span>
-          <h2 className="tml__title"><BlurText text="Six phases. One direction." step={0.06} /></h2>
+          <h2 className="tml__title"><BlurText text="Six phases. One *direction." step={0.06} /></h2>
         </div>
         <div className="phx__grid">
           {PHASES.map((ph, i) => (
             <article className={`phx__card reveal reveal--d${(i % 3) + 1}`} key={ph.name}>
-              <span className="phx__num">Phase {String(i + 1).padStart(2, '0')}</span>
+              <span className="phx__top">
+                <svg className="phx__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  {ICONS[ph.icon]}
+                </svg>
+                <span className="phx__num">Phase {String(i + 1).padStart(2, '0')}</span>
+              </span>
               <h3>{ph.name}</h3>
               <ul>{ph.points.map((p) => <li key={p}>{p}</li>)}</ul>
             </article>
           ))}
         </div>
       </section>
+
+      <GrowthChart />
 
       <section className="offer">
         <div className="offer__panel reveal">
@@ -202,7 +228,7 @@ export default function WealthPage() {
         <div className="init__overlay" aria-hidden="true" />
         <div className="init__inner">
           <span className="init__label reveal">Your chance</span>
-          <h2 className="init__title"><BlurText text="Think profitably. Live it." step={0.09} /></h2>
+          <h2 className="init__title"><BlurText text="Think profitably. *Live it." step={0.09} /></h2>
           <p className="init__body reveal reveal--d2">
             Limited spots, and the price raises soon. Stabilize your nervous system, clarify
             your aligned income path, and build momentum that lasts.

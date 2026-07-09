@@ -18,12 +18,13 @@ export default function SplitTextRB({
   from = { opacity: 0, y: 44 },
   to = { opacity: 1, y: 0 },
   tag: Tag = 'span',
+  fancy,
 }) {
   const ref = useRef(null);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !text) return;
+    if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let split;
@@ -48,11 +49,11 @@ export default function SplitTextRB({
       split && split.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text]);
+  }, [text, fancy]);
 
   return (
     <Tag ref={ref} className={`stx ${className}`} style={{ visibility: 'hidden' }}>
-      {text}
+      {text}{fancy && <> <i className="fx">{fancy}</i></>}
     </Tag>
   );
 }

@@ -20,7 +20,7 @@ export default function MentorshipPage() {
         <div className="subhero__inner">
           <span className="subhero__label reveal">Private 1&ndash;1 &middot; by application</span>
           <h1 className="subhero__title">
-            <SplitTextRB text="Work with David, one to one." delay={28} />
+            <SplitTextRB text="Work with David," fancy="one to one." delay={28} />
           </h1>
           <p className="subhero__framework reveal reveal--d1">
             Recalibrate your <em>Frequency</em>. Reconnect to <em>Source</em>. Create from <em>Truth</em>.
@@ -59,7 +59,7 @@ export default function MentorshipPage() {
         <div className="init__inner">
           <span className="init__label reveal">The invitation</span>
           <h2 className="init__title">
-            <BlurText text="If something in you feels the call." step={0.09} />
+            <BlurText text="If something in you feels *the *call." step={0.09} />
           </h2>
           <p className="init__body reveal reveal--d2">
             This container is intimate, deep, and not for everyone. If your soul is nodding
