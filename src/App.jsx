@@ -14,7 +14,27 @@ import Footer from './components/Footer.jsx';
 import GradualBlur from './components/GradualBlur.jsx';
 import MentorshipPage from './components/MentorshipPage.jsx';
 import WealthPage from './components/WealthPage.jsx';
+import Btn from './components/Btn.jsx';
 import { useMotion } from './hooks/useMotion.js';
+
+const META = {
+  '/': ['David Kasneci — Author of Project 369',
+    'Author of the Project 369 book series and founder of Higher Mind Publishing. 8 published works, 3,997 verified reviews, 4.9 average.'],
+  '/mentorship': ['Work 1–1 with David Kasneci — Private Mentorship',
+    'A minimum three-month private mentorship container. Business, relationships, healing, health, spirit and direction — by application.'],
+  '/wealth': ['Wealth Consciousness — 30-Day Mastermind · David Kasneci',
+    'Manifest stable, scalable income in 30 days. Six phases, live weekly calls, systems and templates. $1,997 today.'],
+};
+
+function NotFound() {
+  return (
+    <section className="nf">
+      <span className="nf__code fx">404</span>
+      <h1 className="nf__title">This page hasn&rsquo;t been written yet.</h1>
+      <Btn solid to="/">Back to the beginning</Btn>
+    </section>
+  );
+}
 
 function Home() {
   return (
@@ -36,15 +56,24 @@ export default function App() {
   const { pathname } = useLocation();
   useMotion(pathname);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const [title, desc] = META[pathname] || META['/'];
+    document.title = title;
+    const m = document.querySelector('meta[name="description"]');
+    if (m) m.setAttribute('content', desc);
+  }, [pathname]);
 
   return (
     <>
+      <a className="skiplink" href="#books">Skip to content</a>
       <Background />
+      <div className="grain" aria-hidden="true" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/mentorship" element={<MentorshipPage />} />
         <Route path="/wealth" element={<WealthPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
       <GradualBlur />

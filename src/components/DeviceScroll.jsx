@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 
 /* Aceternity "Container Scroll" — the screen tilts up from 3D as you
@@ -7,10 +7,19 @@ import { motion, useScroll, useTransform } from 'motion/react';
 export default function DeviceScroll({ eyebrow, title, sub, img, alt }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref });
+  const [narrow, setNarrow] = useState(false);
 
-  const rotateX = useTransform(scrollYProgress, [0, 1], [20, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1.04, 1]);
-  const headY = useTransform(scrollYProgress, [0, 1], [0, -90]);
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 760px)');
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  const rotateX = useTransform(scrollYProgress, [0, 1], [narrow ? 12 : 20, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [narrow ? 0.94 : 1.04, 1]);
+  const headY = useTransform(scrollYProgress, [0, 1], [0, narrow ? -36 : -90]);
 
   return (
     <section className="dscroll" ref={ref}>

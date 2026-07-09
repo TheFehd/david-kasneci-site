@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g fill="none" stroke="#f2f2f0" stroke-width="7">
+    <path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z"/>
+    <path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z" transform="rotate(120 50 54)"/>
+    <path d="M50 54 A40 40 0 0 1 50 14 A40 40 0 0 1 50 54 Z" transform="rotate(240 50 54)"/>
+  </g>
+</svg>
