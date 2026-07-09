@@ -17,6 +17,7 @@ export default function Hero() {
   }, [open]);
 
   return (
+    <>
     <main className="hero" id="top">
       <div className="hero__bg" />
       <div className="hero__overlay" />
@@ -31,40 +32,6 @@ export default function Hero() {
         <a className="nav__side" href="https://369project.com/pages/contact">Contact</a>
       </nav>
 
-      <button
-        className={`nav__burger${open ? ' is-open' : ''}`}
-        aria-label={open ? 'Close menu' : 'Open menu'}
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
-      >
-        <i /><i />
-      </button>
-
-      <div className={`mobnav${open ? ' is-open' : ''}`} aria-hidden={!open}>
-        <nav className="mobnav__links">
-          {LINKS.map(([label, href], i) => (
-            <a
-              key={label}
-              href={href}
-              style={{ transitionDelay: open ? `${0.08 + i * 0.05}s` : '0s' }}
-              onClick={() => setOpen(false)}
-              {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-        <a
-          className="mobnav__store"
-          href="https://369project.com"
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => setOpen(false)}
-        >
-          Visit the store &rarr;
-        </a>
-      </div>
-
       <div className="hero__titleWrap">
         <h1 className="hero__title">David Kasneci</h1>
       </div>
@@ -77,5 +44,43 @@ export default function Hero() {
         </svg>
       </a>
     </main>
+
+    {/* menu control + overlay live OUTSIDE the hero — its isolated stacking
+       context would trap their z-index under later sections */}
+    <button
+      className={`nav__burger${open ? ' is-open' : ''}`}
+      aria-label={open ? 'Close menu' : 'Open menu'}
+      aria-expanded={open}
+      onClick={() => setOpen(!open)}
+    >
+      <span className="nav__burgerIcon" aria-hidden="true"><i /><i /></span>
+      <span className="nav__burgerTxt">{open ? 'Close' : 'Menu'}</span>
+    </button>
+
+    <div className={`mobnav${open ? ' is-open' : ''}`} aria-hidden={!open}>
+      <nav className="mobnav__links">
+        {LINKS.map(([label, href], i) => (
+          <a
+            key={label}
+            href={href}
+            style={{ transitionDelay: open ? `${0.08 + i * 0.05}s` : '0s' }}
+            onClick={() => setOpen(false)}
+            {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+      <a
+        className="mobnav__store"
+        href="https://369project.com"
+        target="_blank"
+        rel="noreferrer"
+        onClick={() => setOpen(false)}
+      >
+        Visit the store &rarr;
+      </a>
+    </div>
+    </>
   );
 }
