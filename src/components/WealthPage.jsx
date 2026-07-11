@@ -7,7 +7,6 @@ import BlurText from './BlurText.jsx';
 import SplitTextRB from './SplitTextRB.jsx';
 import DeviceScroll from './DeviceScroll.jsx';
 import GrowthChart from './GrowthChart.jsx';
-import LogoLoop from './LogoLoop.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,59 +16,37 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ENROLL = 'https://project369.com/wealth-consciousness-page';
 
-/* outcomes loop — each word carries its own mark */
-const TICK_ICONS = {
-  pulse: <path d="M2 12h4l3-8 4 16 3-8h6" />,
-  triq: <g strokeWidth="2"><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" /><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" transform="rotate(120 12 12.6)" /><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" transform="rotate(240 12 12.6)" /></g>,
-  trend: <path d="M3 17l5.5-5.5 4 4L21 7m0 0h-5.5M21 7v5.5" />,
-  spark: <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" />,
-  bolt: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
-  grid: <path d="M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14" />,
-  route: <path d="M5 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm14-12a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM7 18h8a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8" />,
+/* animated line icons — each card's mark draws itself */
+const CARD_ICONS = {
+  pulse: <path pathLength="100" d="M2 12h4l3-8 4 16 3-8h6" />,
+  shield: <><path pathLength="100" d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" /><path pathLength="100" d="M9 12l2 2 4-4" /></>,
+  target: <><circle pathLength="100" cx="12" cy="12" r="8" /><circle pathLength="100" cx="12" cy="12" r="4.2" /><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" /></>,
+  trend: <path pathLength="100" d="M3 17l5.5-5.5 4 4L21 7m0 0h-5.5M21 7v5.5" />,
+  loop: <path pathLength="100" d="M6 12c0-1.7 1.3-3 3-3 2.5 0 4.5 6 7 6 1.7 0 3-1.3 3-3s-1.3-3-3-3c-2.5 0-4.5 6-7 6-1.7 0-3-1.3-3-3Z" transform="translate(-1 0) scale(1.08)" />,
 };
-const TICKER = [
-  ['pulse', 'Nervous-system safety'],
-  ['triq', 'Creator identity'],
-  ['trend', 'Aligned income'],
-  ['spark', 'Creative genius'],
-  ['bolt', 'Inspired action'],
-  ['grid', 'Wealth systems'],
-  ['route', 'A path to $10k — $10M'],
-];
-const TICKER_LOGOS = TICKER.map(([icon, label]) => ({
-  node: (
-    <span className="wtick__item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        {TICK_ICONS[icon]}
-      </svg>
-      {label}
-    </span>
-  ),
-  title: label,
-}));
 
 const TIMELINE = [
-  { n: '7', label: 'Within 7 days', points: [
+  { n: '7', icon: 'pulse', label: 'Within 7 days', points: [
     'You stop sabotaging income opportunities',
     'You stop reacting emotionally to uncertainty',
     'You make clean, high-quality decisions from abundance, not fear',
   ]},
-  { n: '10', label: 'Within 10 days', points: [
+  { n: '10', icon: 'shield', label: 'Within 10 days', points: [
     'Confidence replaces second-guessing',
     'The mental noise around what, when and how dissolves',
     'Momentum arrives without fear or doubt',
   ]},
-  { n: '14', label: 'Within 14 days', points: [
+  { n: '14', icon: 'target', label: 'Within 14 days', points: [
     'You know exactly how to increase income and success',
     'Decisions come from clarity instead of survival',
     'Scattered becomes fully aligned',
   ]},
-  { n: '30', label: 'Within 30 days', points: [
+  { n: '30', icon: 'trend', label: 'Within 30 days', points: [
     'Alignment has increased your income and success',
     'Action is consistent and inspired — without burnout',
     'You think profitably, and life starts reflecting it',
   ]},
-  { n: '∞', label: 'Ongoing', points: [
+  { n: '∞', icon: 'loop', label: 'Ongoing', points: [
     'Aligned action without procrastination',
     'Stable confidence regardless of circumstances',
     'Success feels grounded, supported and repeatable',
@@ -231,20 +208,6 @@ export default function WealthPage() {
         </figure>
       </section>
 
-      {/* ---- outcomes loop (react-bits LogoLoop) ---- */}
-      <div className="wticker">
-        <LogoLoop
-          logos={TICKER_LOGOS}
-          speed={70}
-          gap={64}
-          logoHeight={22}
-          pauseOnHover
-          fadeOut
-          fadeOutColor="#070708"
-          ariaLabel="What the activation installs"
-        />
-      </div>
-
       {/* ---- money stories: real verified purchases ---- */}
       <section className="wproof">
         <div className="tml__head">
@@ -285,6 +248,9 @@ export default function WealthPage() {
               <div className="wstack__head">
                 <span className="wstack__n">{t.n}</span>
                 <h3>{t.label}</h3>
+                <svg className="wstack__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  {CARD_ICONS[t.icon]}
+                </svg>
               </div>
               <div className="wstack__body">
                 <ul>{t.points.map((p) => <li key={p}>{p}</li>)}</ul>

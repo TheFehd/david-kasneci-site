@@ -2824,39 +2824,11 @@ html, body {
 }
 
 /* ---- outcomes ticker ---- */
-.wticker {
-  overflow: hidden;
-  border-top: 1px solid rgba(52, 211, 153, 0.16);
-  border-bottom: 1px solid rgba(52, 211, 153, 0.16);
-  padding: 15px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.wticker__track {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-  animation: wtick 36s linear infinite;
-}
-.wticker__track span {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 11.5px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(240, 240, 240, 0.62);
-  white-space: nowrap;
-}
-.wticker__track i {
-  font-style: normal;
-  color: var(--wc, #10b981);
-  font-size: 8px;
-  margin: 0 22px;
-}
-@keyframes wtick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .wticker__track { animation: none; } }
+
+
+
+
+@media (prefers-reduced-motion: reduce) {  }
 
 /* ---- money stories ---- */
 .wproof { max-width: 1080px; margin: 0 auto; padding: clamp(70px, 11vh, 130px) clamp(20px, 5vw, 60px) clamp(40px, 6vh, 70px); }
@@ -3241,29 +3213,35 @@ html, body {
 @media (prefers-reduced-motion: reduce) { .wstack__card { animation: none; } }
 
 /* ---- LogoLoop items ---- */
-.wticker {
-  border-top: 1px solid rgba(52, 211, 153, 0.14);
-  border-bottom: 1px solid rgba(52, 211, 153, 0.14);
-  padding: 16px 0;
-  -webkit-mask-image: none;
-  mask-image: none;
-  overflow: hidden;
-}
-.wtick__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgba(240, 240, 240, 0.7);
-  white-space: nowrap;
-}
-.wtick__item svg {
-  width: 21px;
-  height: 21px;
-  color: var(--wc-bright, #34d399);
+
+
+
+
+/* ---- timeline card icons: they draw themselves, breathe, repeat ---- */
+.wstack__icon {
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
   flex: none;
+  color: var(--wc-bright, #34d399);
+  filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.35));
+}
+.wstack__icon path,
+.wstack__icon circle[pathLength] {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: wdraw 4.5s ease-in-out infinite;
+}
+@keyframes wdraw {
+  0%   { stroke-dashoffset: 100; opacity: 0.25; }
+  38%  { stroke-dashoffset: 0; opacity: 1; }
+  78%  { stroke-dashoffset: 0; opacity: 1; }
+  92%  { stroke-dashoffset: 0; opacity: 0.15; }
+  100% { stroke-dashoffset: 100; opacity: 0.15; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wstack__icon path, .wstack__icon circle[pathLength] {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }
