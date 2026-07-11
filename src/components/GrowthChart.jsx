@@ -60,7 +60,8 @@ export default function GrowthChart() {
           ))}
           <text className="gchart__axis" x="40" y="322">Day 0</text>
           <text className="gchart__axis" x="744" y="322" textAnchor="end">Day 30</text>
-          <text className="gchart__oldlabel" x="758" y="228" textAnchor="end">old pattern</text>
+          <text className="gchart__oldlabel" x="758" y="252" textAnchor="end">old pattern</text>
+          <text className="gchart__newlabel" x="700" y="42" textAnchor="end">the aligned path</text>
         </svg>
       </div>
 

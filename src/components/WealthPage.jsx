@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PageHead from './PageHead.jsx';
@@ -10,11 +10,16 @@ import GrowthChart from './GrowthChart.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* /wealth — the Wealth Consciousness mastermind funnel, rebuilt in the
-   site's language. Copy distilled from project369.com/wealth-consciousness-page;
-   enroll CTAs go to the real checkout funnel. */
+/* /wealth — the Wealth Consciousness mastermind, full sales page.
+   Every image is David's real funnel asset; every claim is from his
+   funnel; every CTA goes to the real checkout. */
 
 const ENROLL = 'https://project369.com/wealth-consciousness-page';
+
+const TICKER = [
+  'Nervous-system safety', 'Creator identity', 'Aligned income',
+  'Creative genius', 'Inspired action', 'Wealth systems', 'A path to $10k — $10M',
+];
 
 const TIMELINE = [
   { n: '7', label: 'Within 7 days', points: [
@@ -44,66 +49,114 @@ const TIMELINE = [
   ]},
 ];
 
-const ICONS = {
-  layers: <path d="M12 3 3 8l9 5 9-5-9-5Zm-9 9 9 5 9-5M3 16.5l9 5 9-5" />,
-  spark: <path d="M12 2v5M12 17v5M2 12h5M17 12h5M5 5l3.5 3.5M15.5 15.5 19 19M19 5l-3.5 3.5M8.5 15.5 5 19" />,
-  heart: <path d="M12 21C7 16.5 3 13 3 8.8 3 6 5.2 4 7.6 4c1.7 0 3.3.9 4.4 2.4C13.1 4.9 14.7 4 16.4 4 18.8 4 21 6 21 8.8c0 4.2-4 7.7-9 12.2Zm-8-9h4l2-3 3 5 2-3h6" />,
-  bolt: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
-  grid: <path d="M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14" />,
-  compass: <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Zm4-14-2.5 6L8 16l2.5-6L16 8Z" />,
-};
-
+/* the real six phases — names and promises from David's own course tiles */
 const PHASES = [
-  { name: 'Foundation', icon: 'layers', points: [
-    'Money stops feeling threatening to your system',
-    'Fear, doubt and urgency leave your decisions',
-    'A stable foundation where wealth can actually hold',
-  ]},
-  { name: 'Creative Genius', icon: 'spark', points: [
-    'Attract authentic ideas and opportunities',
-    'The hidden psychology of creating, selling and receiving',
-    'Scattered ideas become structured opportunities',
-  ]},
-  { name: 'Healing & Clearing', icon: 'heart', points: [
-    'Dissolve the subconscious blocks that sabotage breakthroughs',
-    'Release patterns tied to money, worth and visibility',
-    'Momentum continues instead of resetting',
-  ]},
-  { name: 'Inspired Action', icon: 'bolt', points: [
-    'Clarity becomes consistent, aligned action',
-    'Procrastination, avoidance and burnout eliminated',
-    'Execution habits that compound',
-  ]},
-  { name: 'Systems & Scale', icon: 'grid', points: [
-    'Simple structures that increase income',
-    'David’s own templates — no chaos, no guesswork',
-    'Exact AI workflows, handed to you',
-  ]},
-  { name: 'Integration & Path Selection', icon: 'compass', points: [
-    'Your next level of income, made explicit',
-    'One direction to go all in on',
-    'A roadmap that feels grounded and sustainable',
-  ]},
+  { img: '/assets/369/wealth/ph1.jpg', name: 'Foundation',
+    promise: 'Activate wealth consciousness & your creator identity',
+    points: [
+      'Money stops feeling threatening to your system',
+      'Fear, doubt and urgency leave your decisions',
+      'A stable base where wealth can actually hold',
+    ]},
+  { img: '/assets/369/wealth/ph2.jpg', name: 'Creative Genius',
+    promise: 'Access your superconscious mind daily & attract aligned opportunities',
+    points: [
+      'The hidden psychology of creating, selling and receiving',
+      'Scattered ideas become structured opportunities',
+      'Authentic ideas arrive instead of being forced',
+    ]},
+  { img: '/assets/369/wealth/ph3.jpg', name: 'Healing & Clearing',
+    promise: 'Dissolve success blocks & heal limiting scarcity around money',
+    points: [
+      'Release patterns tied to money, worth and visibility',
+      'The blocks that sabotage breakthroughs, dissolved',
+      'Momentum continues instead of resetting',
+    ]},
+  { img: '/assets/369/wealth/ph4.jpg', name: 'Inspired Action',
+    promise: 'Master effortless inspired action & align with high-income skills',
+    points: [
+      'Clarity becomes consistent, aligned action',
+      'Procrastination, avoidance and burnout eliminated',
+      'Execution habits that compound',
+    ]},
+  { img: '/assets/369/wealth/ph5.jpg', name: 'Systems & Scale',
+    promise: 'Build wealth systems that scale on autopilot',
+    points: [
+      'Simple structures that increase income',
+      'David’s own templates — no chaos, no guesswork',
+      'Exact AI workflows, handed to you',
+    ]},
+  { img: '/assets/369/wealth/ph6.jpg', name: 'Integration & Path Selection',
+    promise: 'Choose your path & create your roadmap to $10k, $100k, $1M or $10M',
+    points: [
+      'Your next level of income, made explicit',
+      'One direction to go all in on',
+      'A roadmap that feels grounded and sustainable',
+    ]},
+];
+
+/* real verified purchases from the Project 369 store — money stories */
+const STORIES = [
+  { photo: '/assets/369/reviews/rev06.jpg', name: 'Sherri C.', product: 'Manifestation Bundle',
+    quote: 'They came into my life during the most difficult situation I had ever faced. Using these journals daily, I have completely changed my life — I manifested my dream home.' },
+  { photo: '/assets/369/reviews/rev11.jpg', name: 'Paul H.', product: 'The Key to the Universe',
+    quote: 'I was skeptical at the start, but the daily practice really focused my mind. I needed a car with a poor credit rating — the broker who called me had 369 in the company name. Then they said yes.' },
+  { photo: '/assets/369/reviews/rev12.jpg', name: 'Nancy C.', product: 'The Key to Abundance',
+    quote: 'Easy to read and understand — you read, then journal your manifestations and visualizations daily. These books are going to expedite my dreams.' },
 ];
 
 const STACK = [
-  'The six-phase Wealth Consciousness curriculum',
-  'The entire Initiation Masterclass',
-  'One year of live weekly calls with David',
-  'Community of powerful creators',
-  'Boxset of physical workbooks',
-  'Marketing systems, templates and AI workflows',
-  'Subconscious audios + bonus resources',
+  ['The six-phase curriculum', 'video trainings + workbooks, structured across 30 days'],
+  ['The entire Initiation Masterclass', 'included in full'],
+  ['One year of live weekly calls', 'with David, every week'],
+  ['Community of powerful creators', 'you don’t do this alone'],
+  ['Boxset of physical workbooks', 'shipped to you'],
+  ['Marketing systems & templates', 'David’s own, plus exact AI workflows'],
+  ['Subconscious audios', '+ bonus resources'],
 ];
 
-const IS = ['A guided container', 'Outcome-focused', 'Supportive and stabilizing', 'Designed to prevent collapse'];
-const ISNOT = ['A content-heavy course', 'Hustle-based', 'Pressure-driven', 'Something you push through'];
+const PLANS = [
+  { id: 'once', label: 'One payment', price: '$1,997', per: 'once', note: 'Next price raise: $4,997' },
+  { id: '3x', label: '3 months', price: '$693', per: '/ month × 3', note: '$2,079 total · via split-it' },
+  { id: '6x', label: '6 months', price: '$369', per: '/ month × 6', note: '$2,214 total · via split-it' },
+];
+
+const FAQ = [
+  { q: 'What exactly is Wealth Consciousness?',
+    a: 'A 30-day activation: six phases of video trainings and workbooks, one year of live weekly calls with David, a community of creators, and his own systems and templates. It’s a guided, outcome-focused container — not a content library you push through alone.' },
+  { q: 'How much time does it take?',
+    a: 'The container is designed to prevent collapse, not add pressure: a short daily practice, the phase you’re in, and one live call a week. The six phases are structured across the 30 days; the calls and community continue for a full year.' },
+  { q: 'Is there a payment plan?',
+    a: 'Yes — $693 × 3 months or $369 × 6 months through split-it financing at checkout, or one payment of $1,997.' },
+  { q: 'What happens after the 30 days?',
+    a: 'The live weekly calls with David and the community continue for one year. The outcomes are built to be ongoing: aligned action without procrastination, stable confidence, and success that feels grounded and repeatable.' },
+  { q: 'Who is this for?',
+    a: 'Entrepreneurs, coaches, creators and high-achievers who want to raise their income and success baseline — especially if you’ve done the strategy work and still feel the ceiling. The work targets the layer underneath: identity, nervous system, and alignment.' },
+];
+
+function Faq() {
+  const [open, setOpen] = useState(0);
+  return (
+    <div className="wfaq__list">
+      {FAQ.map((f, i) => (
+        <div className={`wfaq__item${open === i ? ' is-open' : ''}`} key={f.q}>
+          <button className="wfaq__q" aria-expanded={open === i} onClick={() => setOpen(open === i ? -1 : i)}>
+            <span>{f.q}</span>
+            <i aria-hidden="true" />
+          </button>
+          <div className="wfaq__a"><div className="wfaq__aInner"><p>{f.a}</p></div></div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function WealthPage() {
   const stackRef = useRef(null);
+  const [plan, setPlan] = useState('once');
+  const active = PLANS.find((p) => p.id === plan);
 
-  /* scroll-stack: cards pile up; each one settles back and dims as the
-     next slides over it (react-bits ScrollStack, sticky + scoped scrub) */
+  /* scroll-stack: cards pile up; each settles back as the next arrives */
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const cards = stackRef.current ? [...stackRef.current.querySelectorAll('.wstack__card')] : [];
@@ -114,12 +167,7 @@ export default function WealthPage() {
         scale: 0.94,
         filter: 'brightness(0.6)',
         ease: 'none',
-        scrollTrigger: {
-          trigger: cards[i + 1],
-          start: 'top 85%',
-          end: 'top 30%',
-          scrub: true,
-        },
+        scrollTrigger: { trigger: cards[i + 1], start: 'top 85%', end: 'top 30%', scrub: true },
       });
       tw.scrollTrigger && triggers.push(tw.scrollTrigger);
     });
@@ -130,24 +178,71 @@ export default function WealthPage() {
     <div className="wpage">
       <PageHead href={ENROLL} cta="Enroll now" />
 
-      <section className="subhero subhero--center">
-        <div className="subhero__inner">
+      {/* ---- hero: product-forward split ---- */}
+      <section className="whero">
+        <div className="whero__copy">
           <span className="subhero__label reveal">Mastermind &middot; 30-day activation</span>
-          <h1 className="subhero__title">
+          <h1 className="whero__title">
             <SplitTextRB text="Wealth" fancy="Consciousness." delay={30} />
           </h1>
-          <p className="subhero__body reveal reveal--d1">
-            Manifest stable, scalable income in 30 days &mdash; without stress, pressure
-            or burnout. The same work people have paid David over $100,000 for in private,
-            structured into six phases.
+          <p className="whero__lead reveal reveal--d1">
+            Manifest stable, scalable income in 30 days &mdash; without stress, pressure or
+            burnout. The same work people have paid David over <b>$100,000</b> for privately,
+            structured into six phases with him in the room every week.
           </p>
-          <div className="subhero__ctas reveal reveal--d2">
+          <div className="whero__ctas reveal reveal--d2">
             <Btn solid href={ENROLL} target="_blank" rel="noreferrer">Start the 30-day activation</Btn>
-            <span className="subhero__note">$1,997 today &middot; next price raise $4,997</span>
+            <span className="whero__price"><b>$1,997</b> today &middot; next raise $4,997</span>
+          </div>
+          <div className="whero__proof reveal reveal--d3">
+            <span className="whero__stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            4.9 from 3,997 verified reviews across Project&nbsp;369
           </div>
         </div>
+        <figure className="whero__visual reveal reveal--d2" aria-hidden="true">
+          <img src="/assets/369/wealth/ph1.jpg" alt="" loading="eager" />
+          <figcaption>Phase 1 &middot; Foundation</figcaption>
+        </figure>
       </section>
 
+      {/* ---- outcomes ticker ---- */}
+      <div className="wticker" aria-hidden="true">
+        <div className="wticker__track">
+          {[...TICKER, ...TICKER].map((t, i) => (
+            <span key={i}>{t}<i>&#9670;</i></span>
+          ))}
+        </div>
+      </div>
+
+      {/* ---- money stories: real verified purchases ---- */}
+      <section className="wproof">
+        <div className="tml__head">
+          <span className="pillars__label reveal">Verified by readers</span>
+          <h2 className="tml__title"><BlurText text="This work already pays *rent." step={0.06} /></h2>
+        </div>
+        <blockquote className="wproof__pull reveal">
+          &ldquo;I had no job &mdash; I have a job. I had $10,000 of debt on credit cards &mdash;
+          all paid for. I needed a new blue car &mdash; I got my new blue car.&rdquo;
+          <footer>Linda D. &middot; Verified buyer &middot; Soul Work Journal</footer>
+        </blockquote>
+        <div className="wproof__grid">
+          {STORIES.map((s, i) => (
+            <figure className={`wproof__card reveal reveal--d${i + 1}`} key={s.name}>
+              <img src={s.photo} alt={`${s.name}'s review photo`} loading="lazy" />
+              <blockquote>&ldquo;{s.quote}&rdquo;</blockquote>
+              <figcaption>
+                <b>{s.name}</b>
+                <span>Verified buyer &middot; {s.product}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="wproof__note reveal">
+          Reviews from the Project 369 books &mdash; the same method this mastermind installs, guided live.
+        </p>
+      </section>
+
+      {/* ---- week by week (approved scroll stack) ---- */}
       <section className="wstack" ref={stackRef}>
         <div className="tml__head">
           <span className="pillars__label reveal">What to expect</span>
@@ -174,55 +269,109 @@ export default function WealthPage() {
         alt="The Wealth Consciousness course on desktops, laptops, tablets and phones"
       />
 
-      <section className="phx">
+      {/* ---- curriculum: the real course tiles, alternating rows ---- */}
+      <section className="crm">
         <div className="tml__head">
           <span className="pillars__label reveal">The curriculum</span>
           <h2 className="tml__title"><BlurText text="Six phases. One *direction." step={0.06} /></h2>
         </div>
-        <div className="phx__grid">
-          {PHASES.map((ph, i) => (
-            <article className={`phx__card reveal reveal--d${(i % 3) + 1}`} key={ph.name}>
-              <span className="phx__top">
-                <svg className="phx__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  {ICONS[ph.icon]}
-                </svg>
-                <span className="phx__num">Phase {String(i + 1).padStart(2, '0')}</span>
-              </span>
-              <h3>{ph.name}</h3>
-              <ul>{ph.points.map((p) => <li key={p}>{p}</li>)}</ul>
-            </article>
-          ))}
-        </div>
+        {PHASES.map((ph, i) => (
+          <article className={`crm__row${i % 2 ? ' crm__row--flip' : ''}`} key={ph.name}>
+            <figure className="crm__media reveal">
+              <img src={ph.img} alt={`Phase ${i + 1}: ${ph.name} — course preview`} loading="lazy" />
+            </figure>
+            <div className="crm__body">
+              <span className="crm__num reveal">Phase {String(i + 1).padStart(2, '0')}</span>
+              <h3 className="crm__name reveal reveal--d1">{ph.name}</h3>
+              <p className="crm__promise reveal reveal--d1">{ph.promise}</p>
+              <ul className="crm__points reveal reveal--d2">
+                {ph.points.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
       </section>
 
       <GrowthChart />
 
-      <section className="offer">
-        <div className="offer__panel reveal">
-          <span className="pillars__label">Everything you get</span>
-          <ul className="offer__stack">
-            {STACK.map((s) => <li key={s}>{s}</li>)}
-          </ul>
-          <div className="offer__price">
-            <b className="greentext">$1,997</b>
-            <s>$4,997</s>
-            <span>next price raise</span>
+      {/* ---- offer: product + interactive price ---- */}
+      <section className="offer2" id="enroll">
+        <div className="tml__head">
+          <span className="pillars__label reveal">Everything you get</span>
+          <h2 className="tml__title"><BlurText text="One container. All *in." step={0.07} /></h2>
+        </div>
+        <div className="offer2__grid">
+          <div className="offer2__left reveal">
+            <img className="offer2__product" src="/assets/369/wealth/stack.jpg" alt="Everything included in Wealth Consciousness" loading="lazy" />
+            <ul className="offer2__stack">
+              {STACK.map(([t, d]) => (
+                <li key={t}><b>{t}</b><span>{d}</span></li>
+              ))}
+            </ul>
           </div>
-          <p className="offer__plans">Payment plans: $693 &times; 3 months &middot; $369 &times; 6 months</p>
-          <Btn solid href={ENROLL} target="_blank" rel="noreferrer">Join Wealth Consciousness</Btn>
-          <div className="offer__isnt">
-            <div>
-              <h4>This is</h4>
-              <ul>{IS.map((s) => <li key={s}>{s}</li>)}</ul>
+          <aside className="offer2__card reveal reveal--d1">
+            <div className="offer2__plans" role="tablist" aria-label="Payment plan">
+              {PLANS.map((p) => (
+                <button
+                  key={p.id}
+                  role="tab"
+                  aria-selected={plan === p.id}
+                  className={`offer2__plan${plan === p.id ? ' is-on' : ''}`}
+                  onClick={() => setPlan(p.id)}
+                >
+                  {p.label}
+                </button>
+              ))}
             </div>
-            <div>
-              <h4>This is not</h4>
-              <ul>{ISNOT.map((s) => <li key={s}>{s}</li>)}</ul>
+            <div className="offer2__price">
+              <b className="greentext">{active.price}</b>
+              <span>{active.per}</span>
             </div>
-          </div>
+            <p className="offer2__note">{active.note}</p>
+            <Btn solid href={ENROLL} target="_blank" rel="noreferrer">Join Wealth Consciousness</Btn>
+            <p className="offer2__fine">Limited spots &middot; checkout on project369.com</p>
+            <div className="offer__isnt">
+              <div>
+                <h4>This is</h4>
+                <ul><li>A guided container</li><li>Outcome-focused</li><li>Supportive and stabilizing</li><li>Designed to prevent collapse</li></ul>
+              </div>
+              <div>
+                <h4>This is not</h4>
+                <ul><li>A content-heavy course</li><li>Hustle-based</li><li>Pressure-driven</li><li>Something you push through</li></ul>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
+      {/* ---- founder note ---- */}
+      <section className="wfounder">
+        <figure className="wfounder__photo reveal">
+          <img src="/assets/369/coach/path.jpg" alt="David Kasneci" loading="lazy" />
+        </figure>
+        <div className="wfounder__note reveal reveal--d1">
+          <span className="pillars__label">From David</span>
+          <p>
+            &ldquo;I was fully booked doing this work privately &mdash; people have paid over
+            $100,000 for it. Wealth Consciousness is that same work, structured so you can move
+            through it in 30 days, with me in the room every week. It isn&rsquo;t hustle.
+            It&rsquo;s alignment &mdash; the difference between forcing income and
+            <em> holding</em> it.&rdquo;
+          </p>
+          <span className="wfounder__sig fx">David Kasneci</span>
+        </div>
+      </section>
+
+      {/* ---- faq ---- */}
+      <section className="wfaq">
+        <div className="tml__head">
+          <span className="pillars__label reveal">Questions</span>
+          <h2 className="tml__title"><BlurText text="Asked before *enrolling." step={0.06} /></h2>
+        </div>
+        <Faq />
+      </section>
+
+      {/* ---- final call ---- */}
       <section className="init">
         <div className="init__bg" aria-hidden="true" />
         <div className="init__overlay" aria-hidden="true" />
