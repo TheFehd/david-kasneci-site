@@ -7,6 +7,7 @@ import BlurText from './BlurText.jsx';
 import SplitTextRB from './SplitTextRB.jsx';
 import DeviceScroll from './DeviceScroll.jsx';
 import GrowthChart from './GrowthChart.jsx';
+import LogoLoop from './LogoLoop.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,10 +17,36 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ENROLL = 'https://project369.com/wealth-consciousness-page';
 
+/* outcomes loop — each word carries its own mark */
+const TICK_ICONS = {
+  pulse: <path d="M2 12h4l3-8 4 16 3-8h6" />,
+  triq: <g strokeWidth="2"><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" /><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" transform="rotate(120 12 12.6)" /><path d="M12 13 A4.6 4.6 0 0 1 12 4 A4.6 4.6 0 0 1 12 13 Z" transform="rotate(240 12 12.6)" /></g>,
+  trend: <path d="M3 17l5.5-5.5 4 4L21 7m0 0h-5.5M21 7v5.5" />,
+  spark: <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18" />,
+  bolt: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" />,
+  grid: <path d="M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14" />,
+  route: <path d="M5 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm14-12a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM7 18h8a4 4 0 0 0 0-8H9a4 4 0 0 1 0-8" />,
+};
 const TICKER = [
-  'Nervous-system safety', 'Creator identity', 'Aligned income',
-  'Creative genius', 'Inspired action', 'Wealth systems', 'A path to $10k — $10M',
+  ['pulse', 'Nervous-system safety'],
+  ['triq', 'Creator identity'],
+  ['trend', 'Aligned income'],
+  ['spark', 'Creative genius'],
+  ['bolt', 'Inspired action'],
+  ['grid', 'Wealth systems'],
+  ['route', 'A path to $10k — $10M'],
 ];
+const TICKER_LOGOS = TICKER.map(([icon, label]) => ({
+  node: (
+    <span className="wtick__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {TICK_ICONS[icon]}
+      </svg>
+      {label}
+    </span>
+  ),
+  title: label,
+}));
 
 const TIMELINE = [
   { n: '7', label: 'Within 7 days', points: [
@@ -164,8 +191,7 @@ export default function WealthPage() {
     cards.forEach((card, i) => {
       if (i === cards.length - 1) return;
       const tw = gsap.to(card, {
-        scale: 0.94,
-        filter: 'brightness(0.6)',
+        scale: 0.965,
         ease: 'none',
         scrollTrigger: { trigger: cards[i + 1], start: 'top 85%', end: 'top 30%', scrub: true },
       });
@@ -205,13 +231,18 @@ export default function WealthPage() {
         </figure>
       </section>
 
-      {/* ---- outcomes ticker ---- */}
-      <div className="wticker" aria-hidden="true">
-        <div className="wticker__track">
-          {[...TICKER, ...TICKER].map((t, i) => (
-            <span key={i}>{t}<i>&#9670;</i></span>
-          ))}
-        </div>
+      {/* ---- outcomes loop (react-bits LogoLoop) ---- */}
+      <div className="wticker">
+        <LogoLoop
+          logos={TICKER_LOGOS}
+          speed={70}
+          gap={64}
+          logoHeight={22}
+          pauseOnHover
+          fadeOut
+          fadeOutColor="#070708"
+          ariaLabel="What the activation installs"
+        />
       </div>
 
       {/* ---- money stories: real verified purchases ---- */}
@@ -251,9 +282,11 @@ export default function WealthPage() {
         <div className="wstack__cards">
           {TIMELINE.map((t, i) => (
             <article className="wstack__card" style={{ top: `calc(13vh + ${i * 16}px)` }} key={t.label}>
-              <span className="wstack__n">{t.n}</span>
-              <div className="wstack__body">
+              <div className="wstack__head">
+                <span className="wstack__n">{t.n}</span>
                 <h3>{t.label}</h3>
+              </div>
+              <div className="wstack__body">
                 <ul>{t.points.map((p) => <li key={p}>{p}</li>)}</ul>
               </div>
             </article>
